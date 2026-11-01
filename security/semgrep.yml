@@ -1,0 +1,41 @@
+rules:
+  - id: raims.delphi-tooling.shell-command
+    languages: [python]
+    severity: ERROR
+    message: Use argument lists without a command shell.
+    pattern-either:
+      - pattern: subprocess.run(..., shell=True, ...)
+      - pattern: subprocess.call(..., shell=True, ...)
+      - pattern: subprocess.Popen(..., shell=True, ...)
+      - pattern: os.system(...)
+  - id: raims.delphi-tooling.unverified-tls
+    languages: [python]
+    severity: ERROR
+    message: Keep TLS certificate and hostname validation enabled.
+    pattern-either:
+      - pattern: ssl._create_unverified_context(...)
+      - pattern: requests.get(..., verify=False, ...)
+  - id: raims.delphi-source.authenticated-redirects
+    languages: [generic]
+    severity: ERROR
+    message: Keep authenticated HTTP redirects disabled.
+    paths:
+      include: ["*.pas"]
+    pattern-regex: '(?i)HandleRedirects\s*:=\s*True'
+  - id: raims.delphi-source.certificate-acceptance
+    languages: [generic]
+    severity: ERROR
+    message: Preserve the platform certificate validation without a replacement callback.
+    paths:
+      include: ["*.pas"]
+    pattern-regex: '(?i)\bOnValidateServerCertificate\s*:='
+  - id: raims.delphi-source.embedded-private-key
+    languages: [generic]
+    severity: ERROR
+    message: Keep private keys outside source files.
+    pattern-regex: '-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----[\s]+[A-Za-z0-9+/=]{32}'
+  - id: raims.delphi-source.embedded-github-token
+    languages: [generic]
+    severity: ERROR
+    message: Keep access tokens outside source files.
+    pattern-regex: '\b(?:gh[pousr]_[A-Za-z0-9]{36}|github_pat_[A-Za-z0-9_]{82})\b'

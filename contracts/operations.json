@@ -1,0 +1,2679 @@
+{
+  "api_version": "1.0.0",
+  "sha256": "0d74f3b440ed5650794fe948064221495f51c1bd72c250a7be5036c2719041d1",
+  "revision": "0169a1ed165a21748055baa144dd5b2cb84cd940",
+  "operations": [
+    {
+      "id": "GetAccountFees",
+      "service": "accounts",
+      "name": "RetrieveFees",
+      "method": "GET",
+      "path": "/v1/accounts/fees",
+      "parameters": [],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "AccountFees",
+      "response_variants": {
+        "200": "AccountFees"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetAccountNumber",
+      "service": "accounts",
+      "name": "RetrieveNumber",
+      "method": "GET",
+      "path": "/v1/accounts/account_number",
+      "parameters": [],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "AccountNumber",
+      "response_variants": {
+        "200": "AccountNumber"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetCheckoutSettings",
+      "service": "accounts",
+      "name": "RetrieveCheckoutSettings",
+      "method": "GET",
+      "path": "/v1/accounts/checkout_settings",
+      "parameters": [],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "CheckoutSettings",
+      "response_variants": {
+        "200": "CheckoutSettings"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "UpdateCheckoutSettings",
+      "service": "accounts",
+      "name": "UpdateCheckoutSettings",
+      "method": "PATCH",
+      "path": "/v1/accounts/checkout_settings",
+      "parameters": [],
+      "request_schema": "UpdateCheckoutSettingsRequest",
+      "params_type": "TUpdateCheckoutSettingsParams",
+      "body_required": true,
+      "response_schema": "CheckoutSettings",
+      "response_variants": {
+        "200": "CheckoutSettings",
+        "202": "CheckoutSettings"
+      },
+      "success_statuses": [
+        200,
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "CreateCheckoutLogoUpload",
+      "service": "accounts",
+      "name": "CreateCheckoutLogoUpload",
+      "method": "POST",
+      "path": "/v1/accounts/checkout_settings/logo_uploads",
+      "parameters": [],
+      "request_schema": "CreateCheckoutLogoUploadRequest",
+      "params_type": "TCreateCheckoutLogoUploadParams",
+      "body_required": true,
+      "response_schema": "CheckoutAssetUpload",
+      "response_variants": {
+        "201": "CheckoutAssetUpload"
+      },
+      "success_statuses": [
+        201
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "CreateCheckoutFaviconUpload",
+      "service": "accounts",
+      "name": "CreateCheckoutFaviconUpload",
+      "method": "POST",
+      "path": "/v1/accounts/checkout_settings/favicon_uploads",
+      "parameters": [],
+      "request_schema": "CreateCheckoutFaviconUploadRequest",
+      "params_type": "TCreateCheckoutFaviconUploadParams",
+      "body_required": true,
+      "response_schema": "CheckoutAssetUpload",
+      "response_variants": {
+        "201": "CheckoutAssetUpload"
+      },
+      "success_statuses": [
+        201
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "DeleteCheckoutAssetUpload",
+      "service": "accounts",
+      "name": "DeleteCheckoutAssetUpload",
+      "method": "DELETE",
+      "path": "/v1/accounts/checkout_settings/uploads/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^cau_[A-Za-z0-9]+$",
+            "maxLength": 26,
+            "example": "cau_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador recebido ao preparar o envio da imagem."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "CheckoutAssetUploadDeleted",
+      "response_variants": {
+        "200": "CheckoutAssetUploadDeleted"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "GetAccountContext",
+      "service": "accounts",
+      "name": "RetrieveContext",
+      "method": "GET",
+      "path": "/v1/accounts/context",
+      "parameters": [],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "AccountContext",
+      "response_variants": {
+        "200": "AccountContext"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetBalance",
+      "service": "balances",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/balances",
+      "parameters": [],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "Balance",
+      "response_variants": {
+        "200": "Balance"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetBalanceForecast",
+      "service": "balances",
+      "name": "Forecast",
+      "method": "GET",
+      "path": "/v1/balances/forecast",
+      "parameters": [
+        {
+          "name": "period",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "today",
+              "last_7_days",
+              "last_15_days",
+              "last_30_days"
+            ],
+            "default": "today",
+            "example": "last_7_days"
+          },
+          "description": "Período das datas previstas de recebimento, pelo calendário de São Paulo. Inclui hoje e os dias anteriores conforme a opção. Não consulta vencimentos nem projeta os próximos dias."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TGetBalanceForecastParams",
+      "body_required": false,
+      "response_schema": "BalanceForecast",
+      "response_variants": {
+        "200": "BalanceForecast"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "CreateCharge",
+      "service": "charges",
+      "name": "Create",
+      "method": "POST",
+      "path": "/v1/charges",
+      "parameters": [],
+      "request_schema": "CreateChargeRequest",
+      "params_type": "TCreateChargeParams",
+      "body_required": true,
+      "response_schema": "ChargeCreated",
+      "response_variants": {
+        "201": "ChargeCreated",
+        "202": "ChargeCreated"
+      },
+      "success_statuses": [
+        201,
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ListCharges",
+      "service": "charges",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/charges",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "description": "Quantidade de cobranças por página. Inteiros positivos acima do máximo usam o máximo. Valor omitido, vazio, zero, negativo ou inválido usa 10.",
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          }
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "description": "Copie page.next_after da resposta anterior para avançar. Mantenha os mesmos filtros e a ordenação; não envie before junto. Deixe vazio para começar a listagem.",
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          }
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "description": "Copie page.previous_before da resposta anterior para voltar. Mantenha os mesmos filtros e a ordenação; não envie after junto. Deixe vazio se não quiser voltar.",
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          }
+        },
+        {
+          "name": "identifier",
+          "in": "query",
+          "required": false,
+          "description": "Filtra pelo ID completo da cobrança. Se não houver correspondência, list será vazio.",
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          }
+        },
+        {
+          "name": "customer_id",
+          "in": "query",
+          "required": false,
+          "description": "Filtra pelo ID público completo do cliente, retornado no cadastro ou na consulta. O vínculo permanece o mesmo se nome ou e-mail mudar. Pode ser combinado com os demais filtros; mantenha o mesmo customer_id ao mudar de página. Um ID válido sem cobranças na empresa e no ambiente autenticado retorna list vazio. Vazio ou ausência não aplica o filtro.",
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^cus_[A-Za-z0-9]+$",
+            "example": "cus_1Q2W3E4R5T6Y7U8I9O0P"
+          }
+        },
+        {
+          "name": "external_reference",
+          "in": "query",
+          "required": false,
+          "description": "Filtra pela referência atual da cobrança no seu sistema, com igualdade do valor completo, incluindo maiúsculas, minúsculas e acentos. Vazio ou ausência não aplica o filtro. Pode ser combinado com os demais filtros; preserve o valor ao navegar por cursor. Após criar ou editar uma cobrança, pode levar alguns segundos para a busca refletir a referência.",
+          "schema": {
+            "type": "string",
+            "maxLength": 120,
+            "example": "pedido_12345"
+          }
+        },
+        {
+          "name": "email",
+          "in": "query",
+          "required": false,
+          "description": "Filtra pelo e-mail completo registrado na cobrança. Alterar o cadastro do cliente não altera esse e-mail.",
+          "schema": {
+            "type": "string",
+            "maxLength": 254,
+            "example": "cliente@example.com"
+          }
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "required": false,
+          "description": "Filtra por um ou mais códigos separados por vírgula, como 0,1. 0 criado, 1 aguardando pagamento, 2 autorizado, 3 em processamento, 4 pago, 5 parcialmente devolvido, 6 devolvido, 7 cancelado, 8 expirado, 9 falha, 10 chargeback, 11 chargeback em análise, 12 chargeback perdido e 13 chargeback ganho. Pode levar alguns segundos para refletir alterações.",
+          "schema": {
+            "type": "string",
+            "maxLength": 64,
+            "example": "0,1"
+          }
+        },
+        {
+          "name": "payment_method",
+          "in": "query",
+          "required": false,
+          "description": "Filtra pelo meio de pagamento da cobrança: 1 para Pix e 2 para boleto. Para combinar, envie 1,2. Uma cobrança com meio indefinido pode passar a usar Pix ou boleto quando o código Pix ou boleto é gerado no checkout. A seleção na tela, por si só, não altera o filtro.",
+          "schema": {
+            "type": "string",
+            "maxLength": 32,
+            "example": "1,2"
+          }
+        },
+        {
+          "name": "created_gte",
+          "in": "query",
+          "required": false,
+          "description": "Filtra cobranças criadas a partir deste instante, inclusive, em segundos Unix UTC. Se informar created_lte, este valor deve ser menor ou igual a ele.",
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1767225600
+          }
+        },
+        {
+          "name": "created_lte",
+          "in": "query",
+          "required": false,
+          "description": "Filtra cobranças criadas até este instante, inclusive, em segundos Unix UTC.",
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1791936000
+          }
+        },
+        {
+          "name": "due_gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1893456000
+          },
+          "description": "Filtra cobranças com vencimento a partir deste instante, inclusive, em segundos Unix UTC. Pode ser combinado com due_lte e os demais filtros; mantenha o valor ao mudar de página."
+        },
+        {
+          "name": "due_lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1896047999
+          },
+          "description": "Filtra cobranças com vencimento até este instante, inclusive, em segundos Unix UTC. Se informar due_gte, este valor deve ser maior ou igual a ele. Pode ser usado sozinho ou com os demais filtros."
+        },
+        {
+          "name": "paid_gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1767225600
+          },
+          "description": "Filtra cobranças pagas a partir deste instante, inclusive, em segundos Unix UTC. Usa a data do pagamento confirmado, mesmo quando houver estorno posterior. Cobranças sem pagamento confirmado ficam fora do resultado. Mantenha o valor ao mudar de página."
+        },
+        {
+          "name": "paid_lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1791936000
+          },
+          "description": "Filtra cobranças pagas até este instante, inclusive, em segundos Unix UTC. Se informar paid_gte, este valor deve ser maior ou igual a ele. Pode ser combinado com os demais filtros."
+        },
+        {
+          "name": "sort_key",
+          "in": "query",
+          "required": false,
+          "description": "Ordena por valor em centavos ou data de criação. Se omitido, usa a ordem de cadastro; com filtro de criação, usa created_at. Mantenha a mesma ordenação ao mudar de página.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "amount_cents",
+              "created_at"
+            ],
+            "example": "created_at"
+          }
+        },
+        {
+          "name": "sort_order",
+          "in": "query",
+          "required": false,
+          "description": "Define a direção da ordenação. Com desc, a ordem padrão mostra as cobranças mais recentes primeiro.",
+          "schema": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "default": "desc"
+          }
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListChargesParams",
+      "body_required": false,
+      "response_schema": "ChargeListResponse",
+      "response_variants": {
+        "200": "ChargeListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetCharge",
+      "service": "charges",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/charges/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador público da cobrança na Raims, recebido na criação ou na listagem de cobranças.",
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          }
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "Charge",
+      "response_variants": {
+        "200": "Charge"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "UpdateCharge",
+      "service": "charges",
+      "name": "Update",
+      "method": "PATCH",
+      "path": "/v1/charges/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador público da cobrança na Raims, recebido na criação ou na listagem de cobranças.",
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          }
+        }
+      ],
+      "request_schema": "UpdateChargeRequest",
+      "params_type": "TUpdateChargeParams",
+      "body_required": true,
+      "response_schema": "Charge",
+      "response_variants": {
+        "200": "Charge"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "RevokeCharge",
+      "service": "charges",
+      "name": "Revoke",
+      "method": "DELETE",
+      "path": "/v1/charges/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador público da cobrança na Raims, recebido na criação ou na listagem de cobranças.",
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          }
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "RevokeChargeResult",
+      "response_variants": {
+        "200": "ChargeRevoked",
+        "202": "ChargeRevocationPending"
+      },
+      "success_statuses": [
+        200,
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "GetChargePayment",
+      "service": "charges",
+      "name": "RetrievePayment",
+      "method": "GET",
+      "path": "/v1/charges/{id}/payment",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público da cobrança, recebido na criação ou na listagem de cobranças."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "PaymentReceipt",
+      "response_variants": {
+        "200": "PaymentReceipt"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetChargeReceipt",
+      "service": "charges",
+      "name": "RetrieveReceipt",
+      "method": "GET",
+      "path": "/v1/charges/{id}/receipt",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público da cobrança cujo recibo você deseja baixar."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "FinancialDocument",
+      "response_variants": {
+        "200": "FinancialDocument"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetChargeBoleto",
+      "service": "charges",
+      "name": "RetrieveBoleto",
+      "method": "GET",
+      "path": "/v1/charges/{id}/boleto",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público da cobrança cujo boleto você deseja baixar."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "FinancialDocument",
+      "response_variants": {
+        "200": "FinancialDocument"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "CreateRefund",
+      "service": "charges",
+      "name": "CreateRefund",
+      "method": "POST",
+      "path": "/v1/charges/{id}/refunds",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador da cobrança que recebeu o pagamento Pix."
+        }
+      ],
+      "request_schema": "CreateRefundRequest",
+      "params_type": "TCreateRefundParams",
+      "body_required": true,
+      "response_schema": "Refund",
+      "response_variants": {
+        "200": "Refund",
+        "202": "Refund"
+      },
+      "success_statuses": [
+        200,
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ListChargeRefunds",
+      "service": "charges",
+      "name": "ListRefunds",
+      "method": "GET",
+      "path": "/v1/charges/{id}/refunds",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador da cobrança que recebeu o pagamento Pix."
+        },
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          "description": "Quantidade de estornos por página. Valores acima do máximo usam o máximo; ausência, vazio, texto, zero ou valor negativo usa o padrão."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor recebido em page.next_after para avançar. Copie o valor completo e mantenha a mesma cobrança. Não envie junto de before."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor recebido em page.previous_before para voltar. Copie o valor completo e mantenha a mesma cobrança. Não envie junto de after."
+        },
+        {
+          "name": "created_gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1767225600
+          },
+          "description": "Filtra estornos solicitados a partir deste instante, inclusive, em segundos Unix UTC. Usa a data de criação da solicitação, sem depender da conclusão. Mantenha o valor ao mudar de página."
+        },
+        {
+          "name": "created_lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1791936000
+          },
+          "description": "Filtra estornos solicitados até este instante, inclusive, em segundos Unix UTC. Se informar created_gte, este valor deve ser maior ou igual a ele."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListChargeRefundsParams",
+      "body_required": false,
+      "response_schema": "RefundListResponse",
+      "response_variants": {
+        "200": "RefundListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetRefundEligibility",
+      "service": "charges",
+      "name": "RetrieveRefundEligibility",
+      "method": "GET",
+      "path": "/v1/charges/{id}/refund_eligibility",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador da cobrança que recebeu o pagamento Pix."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "RefundEligibility",
+      "response_variants": {
+        "200": "RefundEligibility"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetChargeStatistics",
+      "service": "charges",
+      "name": "Statistics",
+      "method": "GET",
+      "path": "/v1/charges/statistics",
+      "parameters": [
+        {
+          "name": "period",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "today",
+              "last_7_days",
+              "last_15_days",
+              "last_30_days"
+            ],
+            "default": "today",
+            "example": "last_7_days"
+          },
+          "description": "Período da consulta, pelo calendário de São Paulo. today considera hoje; last_7_days, last_15_days e last_30_days incluem hoje e os dias anteriores. A consulta aceita somente esses períodos. start_at e end_at são campos da resposta, não filtros de datas personalizadas."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TGetChargeStatisticsParams",
+      "body_required": false,
+      "response_schema": "ChargeStatistics",
+      "response_variants": {
+        "200": "ChargeStatistics"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "CreateCustomer",
+      "service": "customers",
+      "name": "Create",
+      "method": "POST",
+      "path": "/v1/customers",
+      "parameters": [],
+      "request_schema": "CreateCustomerRequest",
+      "params_type": "TCreateCustomerParams",
+      "body_required": true,
+      "response_schema": "CustomerCreated",
+      "response_variants": {
+        "200": "CustomerCreated",
+        "201": "CustomerCreated"
+      },
+      "success_statuses": [
+        200,
+        201
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ListCustomers",
+      "service": "customers",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/customers",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "description": "Quantidade de clientes por página. Inteiros positivos acima do máximo usam o máximo. Valor omitido, vazio, zero, negativo ou inválido usa 10.",
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          }
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "description": "Copie page.next_after da resposta anterior para avançar. Use o cursor sem alterações, mantenha os mesmos filtros e não envie before junto.",
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          }
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "description": "Copie page.previous_before da resposta anterior para voltar uma página. Mantenha os mesmos filtros e não envie after junto.",
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          }
+        },
+        {
+          "name": "identifier",
+          "in": "query",
+          "required": false,
+          "description": "Identificador público do cliente, com prefixo cus_.",
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "example": "cus_3AbHiWSrsZBoaTg47OcMzC"
+          }
+        },
+        {
+          "name": "name",
+          "in": "query",
+          "required": false,
+          "description": "Busca pelo nome do cliente, com os cadastros mais recentes primeiro. Deixe vazio para ignorar este filtro.",
+          "schema": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 120,
+            "example": "Maria Silva"
+          }
+        },
+        {
+          "name": "email",
+          "in": "query",
+          "required": false,
+          "description": "Filtra pelo e-mail completo do cliente.",
+          "schema": {
+            "type": "string",
+            "maxLength": 254,
+            "example": "cliente@example.com"
+          }
+        },
+        {
+          "name": "document",
+          "in": "query",
+          "required": false,
+          "description": "Filtra pelo CPF ou CNPJ completo do cliente, com ou sem pontos, barra, hífen e espaços.",
+          "schema": {
+            "type": "string",
+            "maxLength": 20,
+            "example": "12345678909"
+          }
+        },
+        {
+          "name": "external_reference",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 120,
+            "example": "cliente_12345"
+          },
+          "description": "Filtra pela referência atual do cliente no seu sistema, com igualdade do valor completo, incluindo maiúsculas, minúsculas e acentos. Pode ser combinada com os demais filtros. Após criar ou editar o cliente, a busca pode levar alguns segundos para refletir a referência. Mantenha o valor ao navegar por cursor."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListCustomersParams",
+      "body_required": false,
+      "response_schema": "CustomerListResponse",
+      "response_variants": {
+        "200": "CustomerListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetCustomer",
+      "service": "customers",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/customers/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador público do cliente na Raims, recebido na criação ou na listagem de clientes.",
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^cus_[A-Za-z0-9]+$",
+            "example": "cus_3AbHiWSrsZBoaTg47OcMzC"
+          }
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "CustomerListItem",
+      "response_variants": {
+        "200": "CustomerListItem"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "UpdateCustomer",
+      "service": "customers",
+      "name": "Update",
+      "method": "PATCH",
+      "path": "/v1/customers/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador público do cliente na Raims, recebido na criação ou na listagem de clientes.",
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^cus_[A-Za-z0-9]+$",
+            "example": "cus_3AbHiWSrsZBoaTg47OcMzC"
+          }
+        }
+      ],
+      "request_schema": "UpdateCustomerRequest",
+      "params_type": "TUpdateCustomerParams",
+      "body_required": true,
+      "response_schema": "CustomerListItem",
+      "response_variants": {
+        "200": "CustomerListItem"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "DeleteCustomer",
+      "service": "customers",
+      "name": "Delete",
+      "method": "DELETE",
+      "path": "/v1/customers/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "Identificador público do cliente na Raims, recebido na criação ou na listagem de clientes.",
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^cus_[A-Za-z0-9]+$",
+            "example": "cus_3AbHiWSrsZBoaTg47OcMzC"
+          }
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "CustomerDeleted",
+      "response_variants": {
+        "200": "CustomerDeleted"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "DeleteCustomersBatch",
+      "service": "customers",
+      "name": "DeleteBatch",
+      "method": "DELETE",
+      "path": "/v1/customers",
+      "parameters": [],
+      "request_schema": "RemoveCustomersRequest",
+      "params_type": "TRemoveCustomersParams",
+      "body_required": true,
+      "response_schema": "CustomerBatchDeleted",
+      "response_variants": {
+        "200": "CustomerBatchDeleted"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ListDisputes",
+      "service": "disputes",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/disputes",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10,
+            "example": 10
+          },
+          "description": "Quantidade de contestações por página. Valores inválidos usam o padrão; valores acima do máximo usam o limite."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor de page.next_after da resposta anterior. Preserve os filtros e a ordenação; não envie junto de before."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor de page.previous_before para voltar. Preserve os filtros e a ordenação; não envie junto de after."
+        },
+        {
+          "name": "stage",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 256,
+            "example": "in_analysis,refund_in_analysis"
+          },
+          "description": "Etapas do caso separadas por vírgula: open, in_analysis, refund_in_analysis, closed, cancelled, rejected ou failed. Closed informa análise encerrada, sem confirmar decisão favorável ou devolução."
+        },
+        {
+          "name": "charge_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Filtra pela cobrança vinculada, usando o identificador público completo. Um ID válido sem casos acessíveis retorna uma lista vazia."
+        },
+        {
+          "name": "disputed_amount_cents",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "example": 10000
+          },
+          "description": "Filtra pelo valor contestado exato, em centavos de real. Não representa o valor atualmente bloqueado."
+        },
+        {
+          "name": "created_gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1,
+            "maximum": 253402300799,
+            "example": 1791878400
+          },
+          "description": "Inclui contestações criadas a partir deste instante, em segundos Unix UTC. O limite é inclusivo."
+        },
+        {
+          "name": "created_lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1,
+            "maximum": 253402300799,
+            "example": 1791964800
+          },
+          "description": "Inclui contestações criadas até este instante, em segundos Unix UTC. O limite é inclusivo e deve ser igual ou posterior a created_gte."
+        },
+        {
+          "name": "sort_key",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "created_at",
+              "disputed_amount_cents"
+            ],
+            "default": "created_at",
+            "example": "created_at"
+          },
+          "description": "Campo usado para ordenar a lista: criação ou valor contestado."
+        },
+        {
+          "name": "sort_order",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "default": "desc",
+            "example": "desc"
+          },
+          "description": "Ordem crescente ou decrescente do campo selecionado."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListDisputesParams",
+      "body_required": false,
+      "response_schema": "DisputeListResponse",
+      "response_variants": {
+        "200": "DisputeListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetDispute",
+      "service": "disputes",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/disputes/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^(?:dp_[A-Za-z0-9]+|med_[1-9][0-9]*)$",
+            "maxLength": 100,
+            "example": "med_123"
+          },
+          "description": "Identificador completo da contestação retornado pela listagem, com prefixo dp_ ou med_."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "Dispute",
+      "response_variants": {
+        "200": "Dispute"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "CreatePaymentLink",
+      "service": "paymentLinks",
+      "name": "Create",
+      "method": "POST",
+      "path": "/v1/payment_links",
+      "parameters": [],
+      "request_schema": "CreatePaymentLinkRequest",
+      "params_type": "TCreatePaymentLinkParams",
+      "body_required": true,
+      "response_schema": "PaymentLink",
+      "response_variants": {
+        "200": "PaymentLink",
+        "201": "PaymentLink"
+      },
+      "success_statuses": [
+        200,
+        201
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ListPaymentLinks",
+      "service": "paymentLinks",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/payment_links",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          "description": "Quantidade de links por página."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor recebido em page.next_after. Mantenha o mesmo filtro charge_id."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor recebido em page.previous_before. Não envie junto com after."
+        },
+        {
+          "name": "charge_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador da cobrança cujo link você quer consultar."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListPaymentLinksParams",
+      "body_required": false,
+      "response_schema": "PaymentLinkListResponse",
+      "response_variants": {
+        "200": "PaymentLinkListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetPaymentLink",
+      "service": "paymentLinks",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/payment_links/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^pl_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "pl_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público do link, recebido na criação ou na listagem."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "PaymentLinkDetails",
+      "response_variants": {
+        "200": "PaymentLinkDetails"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "UpdatePaymentLink",
+      "service": "paymentLinks",
+      "name": "Update",
+      "method": "PATCH",
+      "path": "/v1/payment_links/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^pl_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "pl_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público do link, recebido na criação ou na listagem."
+        }
+      ],
+      "request_schema": "UpdatePaymentLinkRequest",
+      "params_type": "TUpdatePaymentLinkParams",
+      "body_required": true,
+      "response_schema": "PaymentLink",
+      "response_variants": {
+        "200": "PaymentLink"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "SendPaymentLinkEmail",
+      "service": "paymentLinks",
+      "name": "SendEmail",
+      "method": "POST",
+      "path": "/v1/payment_links/{id}/send_email",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^pl_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "pl_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público do link a enviar, recebido na criação ou na listagem."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "PaymentLinkEmailRequestAccepted",
+      "response_variants": {
+        "202": "PaymentLinkEmailRequestAccepted"
+      },
+      "success_statuses": [
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ListRefunds",
+      "service": "refunds",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/refunds",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          "description": "Quantidade de estornos por página. Valores acima do máximo usam o máximo; ausência, vazio, texto, zero ou valor negativo usa o padrão."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor recebido em page.next_after para avançar nesta lista. Copie o valor completo. Não use um cursor da lista de uma cobrança nem envie junto de before."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor recebido em page.previous_before para voltar nesta lista. Copie o valor completo. Não use um cursor da lista de uma cobrança nem envie junto de after."
+        },
+        {
+          "name": "created_gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1767225600
+          },
+          "description": "Filtra estornos solicitados a partir deste instante, inclusive, em segundos Unix UTC. Usa a data de criação da solicitação, sem depender da conclusão. Mantenha o valor ao mudar de página."
+        },
+        {
+          "name": "created_lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1791936000
+          },
+          "description": "Filtra estornos solicitados até este instante, inclusive, em segundos Unix UTC. Se informar created_gte, este valor deve ser maior ou igual a ele."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListRefundsParams",
+      "body_required": false,
+      "response_schema": "RefundListResponse",
+      "response_variants": {
+        "200": "RefundListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetRefund",
+      "service": "refunds",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/refunds/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^rf_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "rf_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador do estorno recebido na solicitação ou no histórico de devoluções."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "Refund",
+      "response_variants": {
+        "200": "Refund"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetRefundReceipt",
+      "service": "refunds",
+      "name": "RetrieveReceipt",
+      "method": "GET",
+      "path": "/v1/refunds/{id}/receipt",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^rf_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "rf_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público do estorno, recebido na solicitação ou na listagem de estornos."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "FinancialDocument",
+      "response_variants": {
+        "200": "FinancialDocument"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "ListStatements",
+      "service": "statements",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/statements",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          "description": "Quantidade de lançamentos por página."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor recebido em page.next_after para avançar. Mantenha os mesmos filtros e a mesma ordem. Use somente after ou before."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor recebido em page.previous_before para voltar. Mantenha os mesmos filtros e a mesma ordem. Use somente after ou before."
+        },
+        {
+          "name": "statement_type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^(?:1|2|3|4|5|6|7|8|9|10)(?:\\s*,\\s*(?:1|2|3|4|5|6|7|8|9|10))*$",
+            "example": "1,2"
+          },
+          "description": "Tipos de lançamento separados por vírgula: 1 recebimento; 2 tarifa; 3 tarifa de serviço; 4 saque; 5 devolução; 6 devolução parcial; 7 crédito por ajuste; 8 débito por ajuste; 9 bloqueio; 10 liberação."
+        },
+        {
+          "name": "reference_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^(?:ch_|dp_|wd_|adj_)[A-Za-z0-9]+$",
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador da cobrança, contestação, saque ou ajuste relacionado ao lançamento. Use o ID completo retornado pela Raims."
+        },
+        {
+          "name": "created_gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1,
+            "maximum": 253402300799,
+            "example": 1791849600
+          },
+          "description": "Início inclusivo do período, em segundos Unix UTC. O filtro considera o instante do lançamento."
+        },
+        {
+          "name": "created_lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1,
+            "maximum": 253402300799,
+            "example": 1791935999
+          },
+          "description": "Fim inclusivo do período, em segundos Unix UTC. O instante informado é o limite exato; frações posteriores ao segundo informado ficam fora do período."
+        },
+        {
+          "name": "sort_order",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "default": "desc"
+          },
+          "description": "Ordem dos lançamentos pela data: desc mostra os mais recentes primeiro; asc mostra os mais antigos primeiro."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListStatementsParams",
+      "body_required": false,
+      "response_schema": "StatementListResponse",
+      "response_variants": {
+        "200": "StatementListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetStatement",
+      "service": "statements",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/statements/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^st_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "st_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador do lançamento retornado na consulta do extrato."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "Statement",
+      "response_variants": {
+        "200": "Statement"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "ListWebhookEventTypes",
+      "service": "webhookEventTypes",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/webhook_event_types",
+      "parameters": [],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WebhookEventTypeListResponse",
+      "response_variants": {
+        "200": "WebhookEventTypeListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "CreateWebhook",
+      "service": "webhooks",
+      "name": "Create",
+      "method": "POST",
+      "path": "/v1/webhooks",
+      "parameters": [],
+      "request_schema": "CreateWebhookRequest",
+      "params_type": "TCreateWebhookParams",
+      "body_required": true,
+      "response_schema": "WebhookCreated",
+      "response_variants": {
+        "201": "WebhookCreated"
+      },
+      "success_statuses": [
+        201
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ListWebhooks",
+      "service": "webhooks",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/webhooks",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          "description": "Quantidade de registros por página. A resposta informa o tamanho efetivo em page.page_size."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Para avançar, copie page.next_after da resposta anterior. Use apenas after ou before."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Para voltar, copie page.previous_before da resposta anterior. Use apenas after ou before."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListWebhooksParams",
+      "body_required": false,
+      "response_schema": "WebhookListResponse",
+      "response_variants": {
+        "200": "WebhookListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetWebhook",
+      "service": "webhooks",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/webhooks/{webhook_id}",
+      "parameters": [
+        {
+          "name": "webhook_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^whk_[A-Za-z0-9]+$",
+            "maxLength": 26,
+            "example": "whk_1AbXiWSrsCBoaTg47OcMzC"
+          },
+          "description": "Identificador do webhook, recebido no cadastro ou na listagem."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "Webhook",
+      "response_variants": {
+        "200": "Webhook"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "UpdateWebhook",
+      "service": "webhooks",
+      "name": "Update",
+      "method": "PATCH",
+      "path": "/v1/webhooks/{webhook_id}",
+      "parameters": [
+        {
+          "name": "webhook_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^whk_[A-Za-z0-9]+$",
+            "maxLength": 26,
+            "example": "whk_1AbXiWSrsCBoaTg47OcMzC"
+          },
+          "description": "Identificador do webhook, recebido no cadastro ou na listagem."
+        }
+      ],
+      "request_schema": "UpdateWebhookRequest",
+      "params_type": "TUpdateWebhookParams",
+      "body_required": true,
+      "response_schema": "Webhook",
+      "response_variants": {
+        "200": "Webhook"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "DeleteWebhook",
+      "service": "webhooks",
+      "name": "Delete",
+      "method": "DELETE",
+      "path": "/v1/webhooks/{webhook_id}",
+      "parameters": [
+        {
+          "name": "webhook_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^whk_[A-Za-z0-9]+$",
+            "maxLength": 26,
+            "example": "whk_1AbXiWSrsCBoaTg47OcMzC"
+          },
+          "description": "Identificador do webhook, recebido no cadastro ou na listagem."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": null,
+      "response_variants": {
+        "204": null
+      },
+      "success_statuses": [
+        204
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "GetWebhookHealth",
+      "service": "webhooks",
+      "name": "RetrieveHealth",
+      "method": "GET",
+      "path": "/v1/webhooks/{webhook_id}/health",
+      "parameters": [
+        {
+          "name": "webhook_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^whk_[A-Za-z0-9]+$",
+            "maxLength": 26,
+            "example": "whk_1AbXiWSrsCBoaTg47OcMzC"
+          },
+          "description": "Identificador do webhook, recebido no cadastro ou na listagem."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WebhookHealth",
+      "response_variants": {
+        "200": "WebhookHealth"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "SetWebhookPause",
+      "service": "webhooks",
+      "name": "SetPause",
+      "method": "PATCH",
+      "path": "/v1/webhooks/{webhook_id}/pause",
+      "parameters": [
+        {
+          "name": "webhook_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^whk_[A-Za-z0-9]+$",
+            "maxLength": 26,
+            "example": "whk_1AbXiWSrsCBoaTg47OcMzC"
+          },
+          "description": "Identificador do webhook que terá os envios pausados ou retomados."
+        }
+      ],
+      "request_schema": "SetWebhookPauseRequest",
+      "params_type": "TSetWebhookPauseParams",
+      "body_required": true,
+      "response_schema": "WebhookPause",
+      "response_variants": {
+        "200": "WebhookPause"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "RotateWebhookSecret",
+      "service": "webhooks",
+      "name": "RotateSecret",
+      "method": "POST",
+      "path": "/v1/webhooks/{webhook_id}/rotate_secret",
+      "parameters": [
+        {
+          "name": "webhook_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^whk_[A-Za-z0-9]+$",
+            "maxLength": 26,
+            "example": "whk_1AbXiWSrsCBoaTg47OcMzC"
+          },
+          "description": "Identificador do webhook, recebido no cadastro ou na listagem."
+        }
+      ],
+      "request_schema": "RotateWebhookSecretRequest",
+      "params_type": "TRotateWebhookSecretParams",
+      "body_required": true,
+      "response_schema": "WebhookSecretRotation",
+      "response_variants": {
+        "200": "WebhookSecretRotation"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "TestWebhook",
+      "service": "webhooks",
+      "name": "Test",
+      "method": "POST",
+      "path": "/v1/webhooks/{webhook_id}/test",
+      "parameters": [
+        {
+          "name": "webhook_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^whk_[A-Za-z0-9]+$",
+            "maxLength": 26,
+            "example": "whk_1AbXiWSrsCBoaTg47OcMzC"
+          },
+          "description": "Identificador do webhook, recebido no cadastro ou na listagem."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WebhookTestAccepted",
+      "response_variants": {
+        "202": "WebhookTestAccepted"
+      },
+      "success_statuses": [
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ListWithdrawalDestinations",
+      "service": "withdrawalDestinations",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/withdrawal_destinations",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          "description": "Quantidade de registros considerados para a página. A lista pode ter menos destinos e ainda indicar uma próxima página; continue enquanto page.has_next for true."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor recebido em page.next_after para avançar. Copie o valor inteiro e mantenha a mesma chave de API. Não envie junto de before."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor recebido em page.previous_before para voltar. Copie o valor inteiro e mantenha a mesma chave de API. Não envie junto de after."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListWithdrawalDestinationsParams",
+      "body_required": false,
+      "response_schema": "WithdrawalDestinationListResponse",
+      "response_variants": {
+        "200": "WithdrawalDestinationListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetWithdrawalDestination",
+      "service": "withdrawalDestinations",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/withdrawal_destinations/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^wdst_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "wdst_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador do destino retornado pela listagem. Use o ID completo com prefixo wdst_; o ID de saque wd_ pertence a outro recurso."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WithdrawalDestination",
+      "response_variants": {
+        "200": "WithdrawalDestination"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "CreateWithdrawal",
+      "service": "withdrawals",
+      "name": "Create",
+      "method": "POST",
+      "path": "/v1/withdrawals",
+      "parameters": [],
+      "request_schema": "CreateWithdrawalRequest",
+      "params_type": "TCreateWithdrawalParams",
+      "body_required": true,
+      "response_schema": "Withdrawal",
+      "response_variants": {
+        "200": "Withdrawal",
+        "202": "Withdrawal"
+      },
+      "success_statuses": [
+        200,
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ListWithdrawals",
+      "service": "withdrawals",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/withdrawals",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10,
+            "example": 10
+          },
+          "description": "Quantidade de saques por página."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor next_after retornado na página anterior. Mantenha os mesmos filtros e a mesma ordem da consulta."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor previous_before retornado na página seguinte. Mantenha os mesmos filtros e a mesma ordem da consulta."
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "pattern": "^(?:PENDING|PROCESSING|COMPLETED|FAILED|CANCELED)(?:\\s*,\\s*(?:PENDING|PROCESSING|COMPLETED|FAILED|CANCELED))*$",
+            "example": "COMPLETED"
+          },
+          "description": "Filtre por um ou mais estados separados por vírgula: PENDING, PROCESSING, COMPLETED, FAILED ou CANCELED."
+        },
+        {
+          "name": "requested_gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1,
+            "maximum": 253402300799,
+            "example": 1791878400
+          },
+          "description": "Retorne saques solicitados a partir deste instante, inclusive. Informe segundos Unix UTC."
+        },
+        {
+          "name": "requested_lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 1,
+            "maximum": 253402300799,
+            "example": 1791964800
+          },
+          "description": "Retorne saques solicitados até este instante, inclusive. Informe segundos Unix UTC."
+        },
+        {
+          "name": "sort_order",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "default": "desc",
+            "example": "desc"
+          },
+          "description": "Ordenação pela data de solicitação: desc mostra os mais recentes primeiro; asc mostra os mais antigos primeiro."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListWithdrawalsParams",
+      "body_required": false,
+      "response_schema": "WithdrawalListResponse",
+      "response_variants": {
+        "200": "WithdrawalListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetWithdrawal",
+      "service": "withdrawals",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/withdrawals/{id}",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^wd_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "wd_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador do saque, com prefixo wd_."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "Withdrawal",
+      "response_variants": {
+        "200": "Withdrawal"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetWithdrawalLimits",
+      "service": "withdrawals",
+      "name": "RetrieveLimits",
+      "method": "GET",
+      "path": "/v1/withdrawals/limits",
+      "parameters": [],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WithdrawalLimits",
+      "response_variants": {
+        "200": "WithdrawalLimits"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetWithdrawalSummary",
+      "service": "withdrawals",
+      "name": "RetrieveSummary",
+      "method": "GET",
+      "path": "/v1/withdrawals/summary",
+      "parameters": [],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WithdrawalSummary",
+      "response_variants": {
+        "200": "WithdrawalSummary"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetAutomaticWithdrawalSettings",
+      "service": "withdrawals",
+      "name": "RetrieveAutomaticSettings",
+      "method": "GET",
+      "path": "/v1/withdrawals/automatic_settings",
+      "parameters": [],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "AutomaticWithdrawalSettings",
+      "response_variants": {
+        "200": "AutomaticWithdrawalSettings"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "UpdateAutomaticWithdrawalSettings",
+      "service": "withdrawals",
+      "name": "UpdateAutomaticSettings",
+      "method": "PATCH",
+      "path": "/v1/withdrawals/automatic_settings",
+      "parameters": [],
+      "request_schema": "UpdateAutomaticWithdrawalSettingsRequest",
+      "params_type": "TUpdateAutomaticWithdrawalSettingsParams",
+      "body_required": true,
+      "response_schema": "AutomaticWithdrawalSettings",
+      "response_variants": {
+        "200": "AutomaticWithdrawalSettings"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ConfirmSimulationPayment",
+      "service": "simulationCharges",
+      "name": "ConfirmPayment",
+      "method": "POST",
+      "path": "/v1/simulations/charges/{id}/confirm_payment",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público da cobrança criada no Sandbox da sua empresa."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "ChargeSimulation",
+      "response_variants": {
+        "200": "ChargeSimulation"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "FailSimulationPayment",
+      "service": "simulationCharges",
+      "name": "FailPayment",
+      "method": "POST",
+      "path": "/v1/simulations/charges/{id}/fail_payment",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público da cobrança criada no Sandbox da sua empresa."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "ChargeSimulation",
+      "response_variants": {
+        "200": "ChargeSimulation"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ConfigureSimulationScenario",
+      "service": "simulationCharges",
+      "name": "ConfigureScenario",
+      "method": "POST",
+      "path": "/v1/simulations/charges/{id}/scenario",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público da cobrança criada no Sandbox da sua empresa."
+        }
+      ],
+      "request_schema": "ChargeScenarioRequest",
+      "params_type": "TChargeScenarioParams",
+      "body_required": true,
+      "response_schema": "ChargeScenario",
+      "response_variants": {
+        "200": "ChargeScenario"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ResolveSimulationScenario",
+      "service": "simulationCharges",
+      "name": "ResolveScenario",
+      "method": "POST",
+      "path": "/v1/simulations/charges/{id}/resolve",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público da cobrança criada no Sandbox da sua empresa."
+        }
+      ],
+      "request_schema": "ResolveChargeScenarioRequest",
+      "params_type": "TResolveChargeScenarioParams",
+      "body_required": true,
+      "response_schema": "ChargeScenario",
+      "response_variants": {
+        "200": "ChargeScenario"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "IssueSimulationPayment",
+      "service": "simulationCharges",
+      "name": "IssuePayment",
+      "method": "POST",
+      "path": "/v1/simulations/charges/{id}/issue_payment",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público da cobrança criada no Sandbox da sua empresa."
+        }
+      ],
+      "request_schema": "IssueSimulationPaymentRequest",
+      "params_type": "TIssueSimulationPaymentParams",
+      "body_required": true,
+      "response_schema": "Charge",
+      "response_variants": {
+        "200": "Charge",
+        "202": "Charge"
+      },
+      "success_statuses": [
+        200,
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "CompensateSimulationBoleto",
+      "service": "simulationCharges",
+      "name": "CompensateBoleto",
+      "method": "POST",
+      "path": "/v1/simulations/charges/{id}/compensate_boleto",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador público da cobrança criada no Sandbox da sua empresa."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "ChargeBoletoCompensation",
+      "response_variants": {
+        "200": "ChargeBoletoCompensation"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "CreateSimulationRefund",
+      "service": "simulationCharges",
+      "name": "CreateRefund",
+      "method": "POST",
+      "path": "/v1/simulations/charges/{id}/refunds",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^ch_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador da cobrança que recebeu o pagamento Pix."
+        }
+      ],
+      "request_schema": "CreateRefundRequest",
+      "params_type": "TCreateRefundParams",
+      "body_required": true,
+      "response_schema": "Refund",
+      "response_variants": {
+        "200": "Refund",
+        "202": "Refund"
+      },
+      "success_statuses": [
+        200,
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "CompleteSimulationRefund",
+      "service": "simulationRefunds",
+      "name": "Complete",
+      "method": "POST",
+      "path": "/v1/simulations/refunds/{id}/complete",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^rf_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "rf_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador do estorno de teste retornado por Simular estorno pendente."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "Refund",
+      "response_variants": {
+        "200": "Refund"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "FailSimulationRefund",
+      "service": "simulationRefunds",
+      "name": "Fail",
+      "method": "POST",
+      "path": "/v1/simulations/refunds/{id}/fail",
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "pattern": "^rf_[A-Za-z0-9]+$",
+            "maxLength": 100,
+            "example": "rf_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Identificador do estorno de teste retornado por Simular estorno pendente."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "Refund",
+      "response_variants": {
+        "200": "Refund"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": true
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "raims-delphi",
+  "version": "0.1.0",
+  "description": "Official Delphi SDK for the Raims public API.",
+  "license": "MIT",
+  "minimum_delphi": "10.4",
+  "platforms": ["Win32", "Win64", "Linux64", "OSX64", "OSXARM64", "Android", "Android64", "iOSDevice64", "iOSSimARM64"],
+  "minimum_delphi_by_platform": {
+    "Win32": "10.4",
+    "Win64": "10.4",
+    "Linux64": "10.4",
+    "OSX64": "10.4",
+    "OSXARM64": "11.0",
+    "Android": "10.4",
+    "Android64": "10.4",
+    "iOSDevice64": "10.4",
+    "iOSSimARM64": "11.2"
+  },
+  "source_path": "src",
+  "runtime_dependencies": [],
+  "documentation": "https://docs.raims.com/en/api"
+}
