@@ -116,7 +116,6 @@ fetching pages. See [pagination](docs/usage.md#pagination).
 - [Errors, idempotency and retries](docs/errors-and-retries.md)
 - [Receiving webhooks](docs/webhooks.md)
 - [Method reference](docs/reference.md)
-- [Contract and maintenance](docs/maintenance.md)
 - [Contributing](CONTRIBUTING.md) and [security](SECURITY.md)
 - [API documentation](https://docs.raims.com/en/api)
 

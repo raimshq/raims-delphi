@@ -48,9 +48,7 @@ Include the source units directly on all targets. `packages/Raims.dpk` is an
 optional Windows runtime-package project. Other targets compile the units
 into the consuming application.
 
-The consuming application needs Delphi and its runtime library. Python and
-the engineering Toolkit are used to generate and validate the SDK source;
-they are not runtime dependencies of the application.
+The consuming application needs Delphi and its runtime library.
 
 The native HTTP backend also needs the system libraries and certificate trust
 store required by the Delphi RTL on that operating system. The SDK does not
@@ -75,18 +73,6 @@ Contributors can check generated source without network access:
 python scripts/generate.py --check
 ```
 
-In the Raims workspace, the canonical validator provides separate source
-archive and native checks:
-
-```sh
-python scripts/check.py --source-only
-python scripts/check.py --source-release
-python scripts/check.py
-```
-
-`--source-only` inspects development source and never approves publication.
-`--source-release` validates the source archive for publication; it does not
-certify compilation or native runtime behavior. The default command separately
-requires actual Delphi Win32 and Win64 compilers and executes their consumers.
-Its Windows results do not establish compatibility with the other targets. See
-[local validation](maintenance.md#local-validation) for the checks and scope.
+The generation check does not compile the units or verify native compatibility.
+Build and exercise your integration with the compiler, operating system, and
+target configuration used by your application.
