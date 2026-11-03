@@ -9,7 +9,7 @@ sys.dont_write_bytecode = True
 
 def main():
     sdk = Path(__file__).resolve().parent.parent
-    workspace = sdk.parent
+    workspace = next((candidate for candidate in (sdk.parent, sdk.parent.parent) if (candidate / "Developer-Toolkit/scripts/release-preflight/delphi_sdk.py").is_file()), sdk.parent)
     validator = workspace / "Developer-Toolkit/scripts/release-preflight/delphi_sdk.py"
     if not validator.is_file():
         raise RuntimeError("The canonical Developer Toolkit validator is unavailable.")
