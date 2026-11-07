@@ -37,7 +37,7 @@
     ],
     "Raims.Constants": [
       "const",
-      "RaimsSdkVersion = '0.1.1';",
+      "RaimsSdkVersion = '0.2.0';",
       "AccountContextAmountUnitCents = 'cents';",
       "AccountContextBusinessTimezoneAmericaSaoPaulo = 'America/Sao_Paulo';",
       "AccountContextCompanyStatusActive = 'active';",
@@ -459,8 +459,8 @@
       "const Error: TJSONObject); reintroduce;",
       "destructor Destroy; override;",
       "property Code: string read GetCode;",
-      "property ErrorType: string read GetErrorType;",
       "property ApiMessage: string read GetApiMessage;",
+      "property Details: TJSONArray read GetDetails;",
       "property ApiError: TJSONObject read GetApiError;",
       "end;",
       "ERaimsInvalidRequestError = class(ERaimsApiError);",

@@ -94,16 +94,16 @@ type
     FError: TJSONObject;
     function ErrorText(const Name: string): string;
     function GetCode: string;
-    function GetErrorType: string;
     function GetApiMessage: string;
+    function GetDetails: TJSONArray;
     function GetApiError: TJSONObject;
   public
     constructor Create(const Message: string; const Metadata: TRaimsResponseMetadata;
       const Error: TJSONObject); reintroduce;
     destructor Destroy; override;
     property Code: string read GetCode;
-    property ErrorType: string read GetErrorType;
     property ApiMessage: string read GetApiMessage;
+    property Details: TJSONArray read GetDetails;
     property ApiError: TJSONObject read GetApiError;
   end;
 
@@ -591,14 +591,19 @@ begin
   Result := ErrorText('code');
 end;
 
-function ERaimsApiError.GetErrorType: string;
-begin
-  Result := ErrorText('type');
-end;
-
 function ERaimsApiError.GetApiMessage: string;
 begin
   Result := ErrorText('message');
+end;
+
+function ERaimsApiError.GetDetails: TJSONArray;
+var
+  Value: TJSONValue;
+begin
+  Result := nil;
+  if FError = nil then Exit;
+  Value := FError.GetValue('details');
+  if Value is TJSONArray then Result := Value.Clone as TJSONArray;
 end;
 
 function ERaimsApiError.GetApiError: TJSONObject;

@@ -6,7 +6,7 @@ unit Raims.Constants;
 interface
 
 const
-  RaimsSdkVersion = '0.1.1';
+  RaimsSdkVersion = '0.2.0';
   AccountContextAmountUnitCents = 'cents';
   AccountContextBusinessTimezoneAmericaSaoPaulo = 'America/Sao_Paulo';
   AccountContextCompanyStatusActive = 'active';

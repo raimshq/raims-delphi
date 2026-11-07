@@ -550,8 +550,6 @@ begin
           Response := FTransport.Send(Wire);
           Metadata.StatusCode := Response.StatusCode;
           Metadata.RequestId := RaimsHeaderValue(Response.Headers, 'Request-Id');
-          if Metadata.RequestId = '' then
-            Metadata.RequestId := RaimsHeaderValue(Response.Headers, 'X-Request-Id');
           Metadata.RetryAfter := RaimsHeaderValue(Response.Headers, 'Retry-After');
           if Length(Response.Body) > FOptions.MaxResponseBytes then
             raise ERaimsUnexpectedResponseError.Create('The API response exceeds the supported size.', Metadata);

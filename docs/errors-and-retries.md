@@ -5,20 +5,33 @@ Errors derive from `ERaimsException` in `Raims.Core`. Check their category and
 A timeout or broken connection after sending does not prove that a write was
 rejected.
 
-`ERaimsApiError` preserves the API's error code, type and message through
-`Code`, `ErrorType` and `ApiMessage`. Specific subclasses distinguish invalid
-requests, authentication, permissions, missing resources, conflicts and rate
-limits. `ERaimsConnectionError` represents a transport failure;
+`ERaimsApiError` exposes `error.code`, `error.message` and `error.details`
+through `Code`, `ApiMessage` and `Details`. Use `Code` to handle the error;
+`ApiMessage` is diagnostic text and can change. Specific subclasses distinguish
+invalid requests, authentication, permissions, missing resources, conflicts and
+rate limits. `ERaimsConnectionError` represents a transport failure;
 `ERaimsUnexpectedResponseError` represents an incompatible response.
 
 Exception messages and default object representations omit request contents.
 Accessing API error data explicitly can expose sensitive information. Log only
 the metadata needed to investigate a failure, such as the status and `Request-Id`.
 
-`ApiError` returns an independent `TJSONObject` copy on each access, or `nil`
-when no error object was available. Store that result and free it after use.
-It differs from borrowed JSON properties on response models; see
-[ownership](usage.md#ownership).
+`Details` returns an independent `TJSONArray` copy containing the field errors,
+or `nil` when the response has no details array. Each item contains `field`,
+`code` and `message`. General errors can omit this array.
+
+`ApiError` returns an independent `TJSONObject` copy of the complete error on
+each access, or `nil` when no error object was available. Store either result
+and free it after use. These copies differ from borrowed JSON properties on
+response models; see [ownership](usage.md#ownership).
+
+
+## Migrating error handling from 0.1
+
+Version 0.2 removes `ErrorType`. Use `Code` to choose how to handle an API
+error, `ApiMessage` for its diagnostic message, and `Details` for field
+validation failures. Each `Details` access returns an owned copy; free it
+after use.
 
 ## Idempotency
 

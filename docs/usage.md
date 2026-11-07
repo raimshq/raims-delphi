@@ -96,6 +96,7 @@ The API uses ordinary Delphi object ownership:
 | `GetObject` and `GetArray` results | Borrowed from their parent; do not free or mutate them. |
 | Response-model properties returning `TJSONObject` or `TJSONArray` directly | Borrowed from their parent; do not free or mutate them. |
 | `ERaimsApiError.ApiError` | Each access returns an owned copy, or `nil`; the caller frees the copy. |
+| `ERaimsApiError.Details` | Each access returns an owned `TJSONArray` copy, or `nil`; the caller frees the copy. |
 
 JSON objects passed to parameter setters are copied. The caller retains the
 original and can free it after the setter returns. A borrowed nested JSON value
