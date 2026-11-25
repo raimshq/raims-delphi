@@ -138,6 +138,39 @@ type
     function Retrieve(const AId: string; const Options: TRaimsRequestOptions): TStatement; overload;
   end;
 
+  TWebhookDeliveriesService = class(TRaimsService)
+  public
+    constructor CreateService(const Requestor: IRaimsRequestor);
+    function List(Params: TListWebhookDeliveriesParams): TWebhookDeliveryListResponse; overload;
+    function List(Params: TListWebhookDeliveriesParams; const Options: TRaimsRequestOptions): TWebhookDeliveryListResponse; overload;
+    function List: TWebhookDeliveryListResponse; overload;
+    function Retrieve(const ADeliveryId: string): TWebhookDelivery; overload;
+    function Retrieve(const ADeliveryId: string; const Options: TRaimsRequestOptions): TWebhookDelivery; overload;
+    function ListAttempts(const ADeliveryId: string; Params: TListWebhookDeliveryAttemptsParams): TWebhookAttemptListResponse; overload;
+    function ListAttempts(const ADeliveryId: string; Params: TListWebhookDeliveryAttemptsParams; const Options: TRaimsRequestOptions): TWebhookAttemptListResponse; overload;
+    function ListAttempts(const ADeliveryId: string): TWebhookAttemptListResponse; overload;
+    function RetrieveAttempt(const ADeliveryId: string; const AAttemptId: string): TWebhookAttemptDetail; overload;
+    function RetrieveAttempt(const ADeliveryId: string; const AAttemptId: string; const Options: TRaimsRequestOptions): TWebhookAttemptDetail; overload;
+    function Resend(const ADeliveryId: string): TWebhookDeliveryResendAccepted; overload;
+    function Resend(const ADeliveryId: string; const Options: TRaimsRequestOptions): TWebhookDeliveryResendAccepted; overload;
+    function ResendMany(Params: TResendWebhookDeliveriesParams): TWebhookBulkResendAccepted; overload;
+    function ResendMany(Params: TResendWebhookDeliveriesParams; const Options: TRaimsRequestOptions): TWebhookBulkResendAccepted; overload;
+    function Advance(const ADeliveryId: string): TWebhookAdvanceAccepted; overload;
+    function Advance(const ADeliveryId: string; const Options: TRaimsRequestOptions): TWebhookAdvanceAccepted; overload;
+  end;
+
+  TWebhookEventsService = class(TRaimsService)
+  public
+    constructor CreateService(const Requestor: IRaimsRequestor);
+    function List(Params: TListWebhookEventsParams): TWebhookEventListResponse; overload;
+    function List(Params: TListWebhookEventsParams; const Options: TRaimsRequestOptions): TWebhookEventListResponse; overload;
+    function List: TWebhookEventListResponse; overload;
+    function Retrieve(const AEventId: string): TWebhookEventDetail; overload;
+    function Retrieve(const AEventId: string; const Options: TRaimsRequestOptions): TWebhookEventDetail; overload;
+    function Deliver(const AEventId: string; Params: TDeliverWebhookEventParams): TWebhookDeliveryResendAccepted; overload;
+    function Deliver(const AEventId: string; Params: TDeliverWebhookEventParams; const Options: TRaimsRequestOptions): TWebhookDeliveryResendAccepted; overload;
+  end;
+
   TWebhookEventTypesService = class(TRaimsService)
   public
     constructor CreateService(const Requestor: IRaimsRequestor);
@@ -1156,6 +1189,290 @@ begin
   Response := FRequestor.Request('GET', '/v1/statements/{id}', StringReplace('/v1/statements/{id}', '{id}', RaimsEncodePathSegment(AId), [rfReplaceAll]), nil, nil, Options, [200]);
   RaimsValidateResponse('GetStatement', Response);
   Result := TStatement.Create(Response);
+end;
+
+constructor TWebhookDeliveriesService.CreateService(const Requestor: IRaimsRequestor);
+begin
+  inherited Create(Requestor);
+end;
+
+function TWebhookDeliveriesService.List(Params: TListWebhookDeliveriesParams): TWebhookDeliveryListResponse;
+begin
+  Result := List(Params, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookDeliveriesService.List: TWebhookDeliveryListResponse;
+begin
+  Result := List(nil, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookDeliveriesService.List(Params: TListWebhookDeliveriesParams; const Options: TRaimsRequestOptions): TWebhookDeliveryListResponse;
+var
+  Response: TRaimsResponse;
+  PageRequestor: IRaimsRequestor;
+  PagePath, QuerySnapshot, InitialAfter, InitialBefore: string;
+  PageOptions: TRaimsRequestOptions;
+begin
+  Response := FRequestor.Request('GET', '/v1/webhook_deliveries', '/v1/webhook_deliveries', Params, nil, Options, [200]);
+  RaimsValidateResponse('ListWebhookDeliveries', Response);
+  Result := TWebhookDeliveryListResponse.Create(Response);
+  try
+    PageRequestor := FRequestor;
+    PagePath := '/v1/webhook_deliveries';
+    PageOptions := Options;
+    QuerySnapshot := '{}';
+    InitialAfter := '';
+    InitialBefore := '';
+    if Params <> nil then
+    begin
+      QuerySnapshot := Params.ToJson;
+      if Params.HasField('after') and not Params.IsNull('after') then InitialAfter := Params.GetString('after');
+      if Params.HasField('before') and not Params.IsNull('before') then InitialBefore := Params.GetString('before');
+    end;
+    Result.AttachPageLoader(
+      function(const Cursor: string; Previous: Boolean): TRaimsCollection
+      var
+        PageParams: TRaimsParams;
+        PageResponse: TRaimsResponse;
+      begin
+        PageParams := TRaimsParams.Create(QuerySnapshot);
+        try
+          PageParams.Unset('after');
+          PageParams.Unset('before');
+          if Previous then PageParams.SetString('before', Cursor)
+          else PageParams.SetString('after', Cursor);
+          PageResponse := PageRequestor.Request('GET', '/v1/webhook_deliveries', PagePath, PageParams, nil, PageOptions, [200]);
+          RaimsValidateResponse('ListWebhookDeliveries', PageResponse);
+          Result := TWebhookDeliveryListResponse.Create(PageResponse);
+        finally
+          PageParams.Free;
+        end;
+      end, InitialAfter, InitialBefore);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TWebhookDeliveriesService.Retrieve(const ADeliveryId: string): TWebhookDelivery;
+begin
+  Result := Retrieve(ADeliveryId, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookDeliveriesService.Retrieve(const ADeliveryId: string; const Options: TRaimsRequestOptions): TWebhookDelivery;
+var
+  Response: TRaimsResponse;
+begin
+  Response := FRequestor.Request('GET', '/v1/webhook_deliveries/{delivery_id}', StringReplace('/v1/webhook_deliveries/{delivery_id}', '{delivery_id}', RaimsEncodePathSegment(ADeliveryId), [rfReplaceAll]), nil, nil, Options, [200]);
+  RaimsValidateResponse('GetWebhookDelivery', Response);
+  Result := TWebhookDelivery.Create(Response);
+end;
+
+function TWebhookDeliveriesService.ListAttempts(const ADeliveryId: string; Params: TListWebhookDeliveryAttemptsParams): TWebhookAttemptListResponse;
+begin
+  Result := ListAttempts(ADeliveryId, Params, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookDeliveriesService.ListAttempts(const ADeliveryId: string): TWebhookAttemptListResponse;
+begin
+  Result := ListAttempts(ADeliveryId, nil, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookDeliveriesService.ListAttempts(const ADeliveryId: string; Params: TListWebhookDeliveryAttemptsParams; const Options: TRaimsRequestOptions): TWebhookAttemptListResponse;
+var
+  Response: TRaimsResponse;
+  PageRequestor: IRaimsRequestor;
+  PagePath, QuerySnapshot, InitialAfter, InitialBefore: string;
+  PageOptions: TRaimsRequestOptions;
+begin
+  Response := FRequestor.Request('GET', '/v1/webhook_deliveries/{delivery_id}/attempts', StringReplace('/v1/webhook_deliveries/{delivery_id}/attempts', '{delivery_id}', RaimsEncodePathSegment(ADeliveryId), [rfReplaceAll]), Params, nil, Options, [200]);
+  RaimsValidateResponse('ListWebhookDeliveryAttempts', Response);
+  Result := TWebhookAttemptListResponse.Create(Response);
+  try
+    PageRequestor := FRequestor;
+    PagePath := StringReplace('/v1/webhook_deliveries/{delivery_id}/attempts', '{delivery_id}', RaimsEncodePathSegment(ADeliveryId), [rfReplaceAll]);
+    PageOptions := Options;
+    QuerySnapshot := '{}';
+    InitialAfter := '';
+    InitialBefore := '';
+    if Params <> nil then
+    begin
+      QuerySnapshot := Params.ToJson;
+      if Params.HasField('after') and not Params.IsNull('after') then InitialAfter := Params.GetString('after');
+      if Params.HasField('before') and not Params.IsNull('before') then InitialBefore := Params.GetString('before');
+    end;
+    Result.AttachPageLoader(
+      function(const Cursor: string; Previous: Boolean): TRaimsCollection
+      var
+        PageParams: TRaimsParams;
+        PageResponse: TRaimsResponse;
+      begin
+        PageParams := TRaimsParams.Create(QuerySnapshot);
+        try
+          PageParams.Unset('after');
+          PageParams.Unset('before');
+          if Previous then PageParams.SetString('before', Cursor)
+          else PageParams.SetString('after', Cursor);
+          PageResponse := PageRequestor.Request('GET', '/v1/webhook_deliveries/{delivery_id}/attempts', PagePath, PageParams, nil, PageOptions, [200]);
+          RaimsValidateResponse('ListWebhookDeliveryAttempts', PageResponse);
+          Result := TWebhookAttemptListResponse.Create(PageResponse);
+        finally
+          PageParams.Free;
+        end;
+      end, InitialAfter, InitialBefore);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TWebhookDeliveriesService.RetrieveAttempt(const ADeliveryId: string; const AAttemptId: string): TWebhookAttemptDetail;
+begin
+  Result := RetrieveAttempt(ADeliveryId, AAttemptId, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookDeliveriesService.RetrieveAttempt(const ADeliveryId: string; const AAttemptId: string; const Options: TRaimsRequestOptions): TWebhookAttemptDetail;
+var
+  Response: TRaimsResponse;
+begin
+  Response := FRequestor.Request('GET', '/v1/webhook_deliveries/{delivery_id}/attempts/{attempt_id}', StringReplace(StringReplace('/v1/webhook_deliveries/{delivery_id}/attempts/{attempt_id}', '{delivery_id}', RaimsEncodePathSegment(ADeliveryId), [rfReplaceAll]), '{attempt_id}', RaimsEncodePathSegment(AAttemptId), [rfReplaceAll]), nil, nil, Options, [200]);
+  RaimsValidateResponse('GetWebhookDeliveryAttempt', Response);
+  Result := TWebhookAttemptDetail.Create(Response);
+end;
+
+function TWebhookDeliveriesService.Resend(const ADeliveryId: string): TWebhookDeliveryResendAccepted;
+begin
+  Result := Resend(ADeliveryId, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookDeliveriesService.Resend(const ADeliveryId: string; const Options: TRaimsRequestOptions): TWebhookDeliveryResendAccepted;
+var
+  Response: TRaimsResponse;
+begin
+  Response := FRequestor.Request('POST', '/v1/webhook_deliveries/{delivery_id}/resend', StringReplace('/v1/webhook_deliveries/{delivery_id}/resend', '{delivery_id}', RaimsEncodePathSegment(ADeliveryId), [rfReplaceAll]), nil, nil, Options, [202]);
+  RaimsValidateResponse('ResendWebhookDelivery', Response);
+  Result := TWebhookDeliveryResendAccepted.Create(Response);
+end;
+
+function TWebhookDeliveriesService.ResendMany(Params: TResendWebhookDeliveriesParams): TWebhookBulkResendAccepted;
+begin
+  Result := ResendMany(Params, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookDeliveriesService.ResendMany(Params: TResendWebhookDeliveriesParams; const Options: TRaimsRequestOptions): TWebhookBulkResendAccepted;
+var
+  Response: TRaimsResponse;
+begin
+  if Params = nil then raise EArgumentNilException.Create('Params');
+  Response := FRequestor.Request('POST', '/v1/webhook_deliveries/resend', '/v1/webhook_deliveries/resend', nil, Params, Options, [202]);
+  RaimsValidateResponse('ResendWebhookDeliveries', Response);
+  Result := TWebhookBulkResendAccepted.Create(Response);
+end;
+
+function TWebhookDeliveriesService.Advance(const ADeliveryId: string): TWebhookAdvanceAccepted;
+begin
+  Result := Advance(ADeliveryId, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookDeliveriesService.Advance(const ADeliveryId: string; const Options: TRaimsRequestOptions): TWebhookAdvanceAccepted;
+var
+  Response: TRaimsResponse;
+begin
+  Response := FRequestor.Request('POST', '/v1/webhook_deliveries/{delivery_id}/advance', StringReplace('/v1/webhook_deliveries/{delivery_id}/advance', '{delivery_id}', RaimsEncodePathSegment(ADeliveryId), [rfReplaceAll]), nil, nil, Options, [202]);
+  RaimsValidateResponse('AdvanceWebhookDelivery', Response);
+  Result := TWebhookAdvanceAccepted.Create(Response);
+end;
+
+constructor TWebhookEventsService.CreateService(const Requestor: IRaimsRequestor);
+begin
+  inherited Create(Requestor);
+end;
+
+function TWebhookEventsService.List(Params: TListWebhookEventsParams): TWebhookEventListResponse;
+begin
+  Result := List(Params, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookEventsService.List: TWebhookEventListResponse;
+begin
+  Result := List(nil, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookEventsService.List(Params: TListWebhookEventsParams; const Options: TRaimsRequestOptions): TWebhookEventListResponse;
+var
+  Response: TRaimsResponse;
+  PageRequestor: IRaimsRequestor;
+  PagePath, QuerySnapshot, InitialAfter, InitialBefore: string;
+  PageOptions: TRaimsRequestOptions;
+begin
+  Response := FRequestor.Request('GET', '/v1/webhook_events', '/v1/webhook_events', Params, nil, Options, [200]);
+  RaimsValidateResponse('ListWebhookEvents', Response);
+  Result := TWebhookEventListResponse.Create(Response);
+  try
+    PageRequestor := FRequestor;
+    PagePath := '/v1/webhook_events';
+    PageOptions := Options;
+    QuerySnapshot := '{}';
+    InitialAfter := '';
+    InitialBefore := '';
+    if Params <> nil then
+    begin
+      QuerySnapshot := Params.ToJson;
+      if Params.HasField('after') and not Params.IsNull('after') then InitialAfter := Params.GetString('after');
+      if Params.HasField('before') and not Params.IsNull('before') then InitialBefore := Params.GetString('before');
+    end;
+    Result.AttachPageLoader(
+      function(const Cursor: string; Previous: Boolean): TRaimsCollection
+      var
+        PageParams: TRaimsParams;
+        PageResponse: TRaimsResponse;
+      begin
+        PageParams := TRaimsParams.Create(QuerySnapshot);
+        try
+          PageParams.Unset('after');
+          PageParams.Unset('before');
+          if Previous then PageParams.SetString('before', Cursor)
+          else PageParams.SetString('after', Cursor);
+          PageResponse := PageRequestor.Request('GET', '/v1/webhook_events', PagePath, PageParams, nil, PageOptions, [200]);
+          RaimsValidateResponse('ListWebhookEvents', PageResponse);
+          Result := TWebhookEventListResponse.Create(PageResponse);
+        finally
+          PageParams.Free;
+        end;
+      end, InitialAfter, InitialBefore);
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
+function TWebhookEventsService.Retrieve(const AEventId: string): TWebhookEventDetail;
+begin
+  Result := Retrieve(AEventId, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookEventsService.Retrieve(const AEventId: string; const Options: TRaimsRequestOptions): TWebhookEventDetail;
+var
+  Response: TRaimsResponse;
+begin
+  Response := FRequestor.Request('GET', '/v1/webhook_events/{event_id}', StringReplace('/v1/webhook_events/{event_id}', '{event_id}', RaimsEncodePathSegment(AEventId), [rfReplaceAll]), nil, nil, Options, [200]);
+  RaimsValidateResponse('GetWebhookEvent', Response);
+  Result := TWebhookEventDetail.Create(Response);
+end;
+
+function TWebhookEventsService.Deliver(const AEventId: string; Params: TDeliverWebhookEventParams): TWebhookDeliveryResendAccepted;
+begin
+  Result := Deliver(AEventId, Params, TRaimsRequestOptions.Default);
+end;
+
+function TWebhookEventsService.Deliver(const AEventId: string; Params: TDeliverWebhookEventParams; const Options: TRaimsRequestOptions): TWebhookDeliveryResendAccepted;
+var
+  Response: TRaimsResponse;
+begin
+  if Params = nil then raise EArgumentNilException.Create('Params');
+  Response := FRequestor.Request('POST', '/v1/webhook_events/{event_id}/deliveries', StringReplace('/v1/webhook_events/{event_id}/deliveries', '{event_id}', RaimsEncodePathSegment(AEventId), [rfReplaceAll]), nil, Params, Options, [202]);
+  RaimsValidateResponse('DeliverWebhookEvent', Response);
+  Result := TWebhookDeliveryResendAccepted.Create(Response);
 end;
 
 constructor TWebhookEventTypesService.CreateService(const Requestor: IRaimsRequestor);

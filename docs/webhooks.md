@@ -51,3 +51,12 @@ fails, return an HTTP error so another delivery can occur. The event's
 `created_at` uses ISO 8601, while the signing header uses Unix seconds.
 
 See the [receiving guide](https://docs.raims.com/en/integracoes/webhooks/receber-eventos).
+
+## Updating webhook subscriptions
+
+Use `charge.payment_instructions_available` in place of `pix.available` and
+`boleto.available`. Use `charge.payment_instructions_failed` in place of
+`pix.issuance_failed` and `boleto.issuance_failed`. Inspect `data.payment_method`
+to distinguish Pix from boleto. The previous SDK names are deprecated and
+remain available for reading historical records. Use the current codes when
+creating or updating a subscription.

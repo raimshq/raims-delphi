@@ -32,6 +32,8 @@ type
     FPaymentLinks: TPaymentLinksService;
     FRefunds: TRefundsService;
     FStatements: TStatementsService;
+    FWebhookDeliveries: TWebhookDeliveriesService;
+    FWebhookEvents: TWebhookEventsService;
     FWebhookEventTypes: TWebhookEventTypesService;
     FWebhooks: TWebhooksService;
     FWithdrawalDestinations: TWithdrawalDestinationsService;
@@ -49,6 +51,8 @@ type
     property PaymentLinks: TPaymentLinksService read FPaymentLinks;
     property Refunds: TRefundsService read FRefunds;
     property Statements: TStatementsService read FStatements;
+    property WebhookDeliveries: TWebhookDeliveriesService read FWebhookDeliveries;
+    property WebhookEvents: TWebhookEventsService read FWebhookEvents;
     property WebhookEventTypes: TWebhookEventTypesService read FWebhookEventTypes;
     property Webhooks: TWebhooksService read FWebhooks;
     property WithdrawalDestinations: TWithdrawalDestinationsService read FWithdrawalDestinations;
@@ -89,6 +93,8 @@ begin
   FPaymentLinks := TPaymentLinksService.CreateService(FRequestor);
   FRefunds := TRefundsService.CreateService(FRequestor);
   FStatements := TStatementsService.CreateService(FRequestor);
+  FWebhookDeliveries := TWebhookDeliveriesService.CreateService(FRequestor);
+  FWebhookEvents := TWebhookEventsService.CreateService(FRequestor);
   FWebhookEventTypes := TWebhookEventTypesService.CreateService(FRequestor);
   FWebhooks := TWebhooksService.CreateService(FRequestor);
   FWithdrawalDestinations := TWithdrawalDestinationsService.CreateService(FRequestor);
@@ -109,6 +115,8 @@ begin
   FWithdrawalDestinations.Free;
   FWebhooks.Free;
   FWebhookEventTypes.Free;
+  FWebhookEvents.Free;
+  FWebhookDeliveries.Free;
   FStatements.Free;
   FRefunds.Free;
   FPaymentLinks.Free;

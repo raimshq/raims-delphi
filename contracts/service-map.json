@@ -55,6 +55,20 @@
     "list": "ListStatements",
     "retrieve": "GetStatement"
   },
+  "webhookDeliveries": {
+    "list": "ListWebhookDeliveries",
+    "retrieve": "GetWebhookDelivery",
+    "listAttempts": "ListWebhookDeliveryAttempts",
+    "retrieveAttempt": "GetWebhookDeliveryAttempt",
+    "resend": "ResendWebhookDelivery",
+    "resendMany": "ResendWebhookDeliveries",
+    "advance": "AdvanceWebhookDelivery"
+  },
+  "webhookEvents": {
+    "list": "ListWebhookEvents",
+    "retrieve": "GetWebhookEvent",
+    "deliver": "DeliverWebhookEvent"
+  },
   "webhookEventTypes": {
     "list": "ListWebhookEventTypes"
   },

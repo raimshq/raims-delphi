@@ -1,7 +1,7 @@
 {
   "api_version": "1.0.0",
-  "sha256": "df7f6bd91a7a70ca20a5a6af84eee7f3a246250b14238e9c8349d6aa5aa670b9",
-  "revision": "47aed0fee0f57350660595ccad636c4a6464223f",
+  "sha256": "907609f20b18d9b08d6c748901fb6488b7a386417261e8fef5e99348834fb7f7",
+  "revision": "355167fd10db87fb00dc18384b5cccb852326f4c",
   "operations": [
     {
       "id": "GetAccountFees",
@@ -1749,6 +1749,524 @@
         200
       ],
       "idempotency": false
+    },
+    {
+      "id": "ListWebhookDeliveries",
+      "service": "webhookDeliveries",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/webhook_deliveries",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          "description": "Quantidade de registros por página. A resposta informa o tamanho efetivo em page.page_size."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Para avançar, copie page.next_after da resposta anterior. Use apenas after ou before."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Para voltar, copie page.previous_before da resposta anterior. Use apenas after ou before."
+        },
+        {
+          "name": "webhook_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "pattern": "^whk_[A-Za-z0-9]+$",
+            "maxLength": 26,
+            "example": "whk_1AbXiWSrsCBoaTg47OcMzC"
+          },
+          "description": "Filtra as entregas de um destino, inclusive quando o cadastro já foi excluído e seu histórico ainda está disponível."
+        },
+        {
+          "name": "event_type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "example": "charge.paid"
+          },
+          "description": "Filtra pelo código do evento recebido pelo webhook."
+        },
+        {
+          "name": "event_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(?!00000000-0000-0000-0000-000000000000$)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "example": "d36ffb51-e0c6-8a8f-904d-e426cc0b76bb"
+          },
+          "description": "Filtra as entregas de um evento pelo seu identificador. Inclui as entregas originais e os reenvios desse evento. Mantenha o valor ao navegar por cursor."
+        },
+        {
+          "name": "status",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 32,
+            "enum": [
+              "pending",
+              "processing",
+              "delivered",
+              "failed",
+              "canceled"
+            ],
+            "example": "delivered"
+          },
+          "description": "Filtra pela situação atual da entrega."
+        },
+        {
+          "name": "created_gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1792281600
+          },
+          "description": "Inclui entregas criadas a partir deste instante, em segundos Unix UTC. O filtro considera a criação da entrega, não a data do evento original."
+        },
+        {
+          "name": "created_lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1792368000
+          },
+          "description": "Inclui entregas criadas até este instante, em segundos Unix UTC. O filtro considera a criação da entrega, não o horário da última tentativa."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListWebhookDeliveriesParams",
+      "body_required": false,
+      "response_schema": "WebhookDeliveryListResponse",
+      "response_variants": {
+        "200": "WebhookDeliveryListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetWebhookDelivery",
+      "service": "webhookDeliveries",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/webhook_deliveries/{delivery_id}",
+      "parameters": [
+        {
+          "name": "delivery_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(?!00000000-0000-0000-0000-000000000000$)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "example": "46be4604-31fc-876a-bbb7-69e204ff9c14"
+          },
+          "description": "Identificador da entrega, recebido na listagem ou no pedido de envio."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WebhookDelivery",
+      "response_variants": {
+        "200": "WebhookDelivery"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "ListWebhookDeliveryAttempts",
+      "service": "webhookDeliveries",
+      "name": "ListAttempts",
+      "method": "GET",
+      "path": "/v1/webhook_deliveries/{delivery_id}/attempts",
+      "parameters": [
+        {
+          "name": "delivery_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(?!00000000-0000-0000-0000-000000000000$)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "example": "46be4604-31fc-876a-bbb7-69e204ff9c14"
+          },
+          "description": "Identificador da entrega, recebido na listagem ou no pedido de envio."
+        },
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          "description": "Quantidade de registros por página. A resposta informa o tamanho efetivo em page.page_size."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Para avançar, copie page.next_after da resposta anterior. Use apenas after ou before."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Para voltar, copie page.previous_before da resposta anterior. Use apenas after ou before."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListWebhookDeliveryAttemptsParams",
+      "body_required": false,
+      "response_schema": "WebhookAttemptListResponse",
+      "response_variants": {
+        "200": "WebhookAttemptListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetWebhookDeliveryAttempt",
+      "service": "webhookDeliveries",
+      "name": "RetrieveAttempt",
+      "method": "GET",
+      "path": "/v1/webhook_deliveries/{delivery_id}/attempts/{attempt_id}",
+      "parameters": [
+        {
+          "name": "delivery_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(?!00000000-0000-0000-0000-000000000000$)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "example": "46be4604-31fc-876a-bbb7-69e204ff9c14"
+          },
+          "description": "Identificador da entrega, recebido na listagem ou no pedido de envio."
+        },
+        {
+          "name": "attempt_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(?!00000000-0000-0000-0000-000000000000$)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "example": "4172c8fa-6c06-488c-9e67-3f60d29596a4"
+          },
+          "description": "Identificador da tentativa, recebido na lista de tentativas dessa entrega."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WebhookAttemptDetail",
+      "response_variants": {
+        "200": "WebhookAttemptDetail"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "ResendWebhookDelivery",
+      "service": "webhookDeliveries",
+      "name": "Resend",
+      "method": "POST",
+      "path": "/v1/webhook_deliveries/{delivery_id}/resend",
+      "parameters": [
+        {
+          "name": "delivery_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(?!00000000-0000-0000-0000-000000000000$)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "example": "46be4604-31fc-876a-bbb7-69e204ff9c14"
+          },
+          "description": "Identificador da entrega, recebido na listagem ou no pedido de envio."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WebhookDeliveryResendAccepted",
+      "response_variants": {
+        "202": "WebhookDeliveryResendAccepted"
+      },
+      "success_statuses": [
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ResendWebhookDeliveries",
+      "service": "webhookDeliveries",
+      "name": "ResendMany",
+      "method": "POST",
+      "path": "/v1/webhook_deliveries/resend",
+      "parameters": [],
+      "request_schema": "ResendWebhookDeliveriesRequest",
+      "params_type": "TResendWebhookDeliveriesParams",
+      "body_required": true,
+      "response_schema": "WebhookBulkResendAccepted",
+      "response_variants": {
+        "202": "WebhookBulkResendAccepted"
+      },
+      "success_statuses": [
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "AdvanceWebhookDelivery",
+      "service": "webhookDeliveries",
+      "name": "Advance",
+      "method": "POST",
+      "path": "/v1/webhook_deliveries/{delivery_id}/advance",
+      "parameters": [
+        {
+          "name": "delivery_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(?!00000000-0000-0000-0000-000000000000$)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "example": "46be4604-31fc-876a-bbb7-69e204ff9c14"
+          },
+          "description": "Identificador da entrega que aguarda uma nova tentativa."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WebhookAdvanceAccepted",
+      "response_variants": {
+        "202": "WebhookAdvanceAccepted"
+      },
+      "success_statuses": [
+        202
+      ],
+      "idempotency": true
+    },
+    {
+      "id": "ListWebhookEvents",
+      "service": "webhookEvents",
+      "name": "List",
+      "method": "GET",
+      "path": "/v1/webhook_events",
+      "parameters": [
+        {
+          "name": "page_size",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100,
+            "default": 10
+          },
+          "description": "Quantidade de eventos por página. A resposta informa se há outra página e o cursor para consultá-la."
+        },
+        {
+          "name": "after",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor de page.next_after para avançar na mesma consulta. Mantenha os filtros usados na primeira página."
+        },
+        {
+          "name": "before",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128
+          },
+          "description": "Cursor de page.previous_before para retornar na mesma consulta. Mantenha os filtros usados na primeira página."
+        },
+        {
+          "name": "event_type",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 100,
+            "example": "charge.paid"
+          },
+          "description": "Filtra pelo nome do evento, como charge.paid."
+        },
+        {
+          "name": "resource_id",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "maxLength": 128,
+            "example": "ch_3AbHiWSrsZBoaTg47OcMzC"
+          },
+          "description": "Filtra pelo identificador público em data.id no corpo do evento."
+        },
+        {
+          "name": "created_gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1767225600
+          },
+          "description": "Filtra eventos criados a partir deste instante, inclusive, em segundos Unix UTC."
+        },
+        {
+          "name": "created_lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int64",
+            "minimum": 0,
+            "maximum": 253402300799,
+            "example": 1791936000
+          },
+          "description": "Filtra eventos criados até este instante, inclusive, em segundos Unix UTC. Se informar created_gte, este valor deve ser maior ou igual a ele."
+        }
+      ],
+      "request_schema": null,
+      "params_type": "TListWebhookEventsParams",
+      "body_required": false,
+      "response_schema": "WebhookEventListResponse",
+      "response_variants": {
+        "200": "WebhookEventListResponse"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "GetWebhookEvent",
+      "service": "webhookEvents",
+      "name": "Retrieve",
+      "method": "GET",
+      "path": "/v1/webhook_events/{event_id}",
+      "parameters": [
+        {
+          "name": "event_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(?!00000000-0000-0000-0000-000000000000$)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "example": "d36ffb51-e0c6-8a8f-904d-e426cc0b76bb"
+          },
+          "description": "Identificador do evento, retornado no histórico de eventos ou nos dados de uma entrega."
+        }
+      ],
+      "request_schema": null,
+      "params_type": null,
+      "body_required": false,
+      "response_schema": "WebhookEventDetail",
+      "response_variants": {
+        "200": "WebhookEventDetail"
+      },
+      "success_statuses": [
+        200
+      ],
+      "idempotency": false
+    },
+    {
+      "id": "DeliverWebhookEvent",
+      "service": "webhookEvents",
+      "name": "Deliver",
+      "method": "POST",
+      "path": "/v1/webhook_events/{event_id}/deliveries",
+      "parameters": [
+        {
+          "name": "event_id",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "type": "string",
+            "format": "uuid",
+            "pattern": "^(?!00000000-0000-0000-0000-000000000000$)[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$",
+            "example": "01113f18-d275-8b6f-ab82-70b8860938da"
+          },
+          "description": "Identificador do evento original que será enviado ao webhook escolhido."
+        }
+      ],
+      "request_schema": "DeliverWebhookEventRequest",
+      "params_type": "TDeliverWebhookEventParams",
+      "body_required": true,
+      "response_schema": "WebhookDeliveryResendAccepted",
+      "response_variants": {
+        "202": "WebhookDeliveryResendAccepted"
+      },
+      "success_statuses": [
+        202
+      ],
+      "idempotency": true
     },
     {
       "id": "ListWebhookEventTypes",
