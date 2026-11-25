@@ -42,6 +42,11 @@ def typename(key, request=False):
     return 'T' + (key[:-7] + 'Params' if request and key.endswith('Request') else key)
 
 
+LEGACY_WEBHOOK_CODES = (
+    "boleto.available", "boleto.issuance_failed", "pix.available", "pix.issuance_failed",
+)
+
+
 class Generator:
     def __init__(self, root=ROOT):
         self.root = root
@@ -156,8 +161,25 @@ class Generator:
         elif isinstance(value, dict):
             if '$ref' in value:
                 self.resolve(value)
-            if 'allOf' in value or 'oneOf' in value:
+            if 'allOf' in value:
                 raise ValueError('Unsupported schema composition')
+            if 'oneOf' in value:
+                variants = value['oneOf']
+                if (set(value) - {'oneOf', 'description', 'title', 'example', 'examples'}
+                        or not isinstance(variants, list) or len(variants) < 2
+                        or any(not isinstance(part, dict) or set(part) != {'type', 'pattern'}
+                               or part['type'] != 'string' or not isinstance(part['pattern'], str) for part in variants)):
+                    raise ValueError('Only patterned string oneOf schemas are supported')
+                for part in variants:
+                    re.compile(part['pattern'])
+            if 'dependentRequired' in value:
+                dependencies = value['dependentRequired']
+                properties = value.get('properties', {})
+                if (value.get('type') != 'object' or not isinstance(dependencies, dict)
+                        or any(field not in properties or not isinstance(required, list)
+                               or any(not isinstance(name, str) or name not in properties for name in required)
+                               or len(required) != len(set(required)) for field, required in dependencies.items())):
+                    raise ValueError('Invalid dependentRequired object properties')
             if 'anyOf' in value and (len(value['anyOf']) != 2 or sum(v.get('type') == 'null' for v in value['anyOf']) != 1):
                 raise ValueError('Only nullable anyOf is supported')
             for child in value.values():
@@ -176,6 +198,8 @@ class Generator:
             child = next(v for v in variants if v.get('type') != 'null')
             schema = dict(child, **schema)
             schema['nullable'] = True
+        if 'oneOf' in schema:
+            schema['type'] = 'string'
         return schema
 
     def kind(self, schema):
@@ -522,6 +546,10 @@ class Generator:
         expected = {'string': 'TJSONString', 'integer': 'TJSONNumber', 'number': 'TJSONNumber', 'boolean': 'TJSONBool', 'object': 'TJSONObject', 'array': 'TJSONArray'}[kind]
         condition = 'RaimsIsJsonString(' + expression + ')' if kind == 'string' else '(' + expression + ' is ' + expected + ')'
         code += indent + 'if not ' + condition + " then InvalidResponse;\n"
+        if 'oneOf' in schema:
+            matches = ' + '.join('Ord(TRegEx.IsMatch(' + expression + '.Value, ' + literal(r'\A(?:' + part['pattern'] + r')\z') + '))'
+                                 for part in schema['oneOf'])
+            code += indent + 'if (' + matches + ') <> 1 then InvalidResponse;\n'
         if kind == 'integer':
             code += indent + 'if not TryStrToInt64(' + expression + '.Value, IntegerValue) then InvalidResponse;\n'
         if kind == 'number':
@@ -550,7 +578,7 @@ class Generator:
             collect(schema, 'Schema' + key)
         def child_name(schema, prefix):
             return 'ValidateSchema' + name(self.schema_key(schema['$ref'])) if '$ref' in schema else 'Validate' + name(prefix)
-        code = self.unit_header('Raims.Validation', ['System.SysUtils', 'System.JSON', 'Raims.Core'])
+        code = self.unit_header('Raims.Validation', ['System.SysUtils', 'System.JSON', 'System.RegularExpressions', 'Raims.Core'])
         code += 'procedure RaimsValidateResponse(const OperationId: string; const Response: TRaimsResponse);\n\nimplementation\n\nprocedure InvalidResponse;\nbegin\n  raise ERaimsUnexpectedResponseError.Create(\'Response does not match the public contract.\');\nend;\n\n'
         for symbol in sorted(validators):
             code += 'procedure ' + symbol + '(Value: TJSONValue); forward;\n'
@@ -573,6 +601,11 @@ class Generator:
             code += 'begin\n' + self.validation_code(schema, 'Value')
             prefix = symbol[len('Validate'):]
             if kind == 'object':
+                for field, required in value.get('dependentRequired', {}).items():
+                    present = 'TJSONObject(Value).GetValue(' + literal(field) + ') <> nil'
+                    for dependency in required:
+                        missing = 'TJSONObject(Value).GetValue(' + literal(dependency) + ') = nil'
+                        code += '  if (' + present + ') and (' + missing + ') then InvalidResponse;\n'
                 for field, child in value.get('properties', {}).items():
                     expression = 'TJSONObject(Value).GetValue(' + literal(field) + ')'
                     if field in value.get('required', []):
@@ -632,6 +665,12 @@ class Generator:
         code += 'const\n  RaimsSdkVersion = ' + literal(json.loads((self.root / 'sdk.json').read_text(encoding='utf-8'))['version']) + ';\n'
         for symbol, value in sorted(constants.items()):
             code += '  ' + symbol + ' = ' + (str(value) if isinstance(value, int) else literal(value)) + ';\n'
+        code += '\n  // Deprecated codes for historical webhook records only.\n'
+        for prefix in ('CreateWebhookParamsEvents', 'WebhookEventTypeCode'):
+            for value in LEGACY_WEBHOOK_CODES:
+                symbol = prefix + name(value)
+                if symbol not in constants:
+                    code += '  ' + symbol + ' = ' + literal(value) + " deprecated 'Historical webhook event code';\n"
         self.outputs['src/Raims.Constants.pas'] = code + '\nimplementation\n\nend.\n'
 
     def generate(self):

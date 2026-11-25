@@ -168,6 +168,12 @@ type
     function UnsetExpectedDestinationId: TCreateWithdrawalParams;
   end;
 
+  TDeliverWebhookEventParams = class(TRaimsParams)
+  public
+    function SetWebhookId(const Value: string): TDeliverWebhookEventParams;
+    function UnsetWebhookId: TDeliverWebhookEventParams;
+  end;
+
   TGetBalanceForecastParams = class(TRaimsParams)
   public
     function SetPeriod(const Value: string): TGetBalanceForecastParams;
@@ -328,6 +334,56 @@ type
     function UnsetSortOrder: TListStatementsParams;
   end;
 
+  TListWebhookDeliveriesParams = class(TRaimsParams)
+  public
+    function SetPageSize(const Value: Int64): TListWebhookDeliveriesParams;
+    function UnsetPageSize: TListWebhookDeliveriesParams;
+    function SetAfter(const Value: string): TListWebhookDeliveriesParams;
+    function UnsetAfter: TListWebhookDeliveriesParams;
+    function SetBefore(const Value: string): TListWebhookDeliveriesParams;
+    function UnsetBefore: TListWebhookDeliveriesParams;
+    function SetWebhookId(const Value: string): TListWebhookDeliveriesParams;
+    function UnsetWebhookId: TListWebhookDeliveriesParams;
+    function SetEventType(const Value: string): TListWebhookDeliveriesParams;
+    function UnsetEventType: TListWebhookDeliveriesParams;
+    function SetEventId(const Value: string): TListWebhookDeliveriesParams;
+    function UnsetEventId: TListWebhookDeliveriesParams;
+    function SetStatus(const Value: string): TListWebhookDeliveriesParams;
+    function UnsetStatus: TListWebhookDeliveriesParams;
+    function SetCreatedGte(const Value: Int64): TListWebhookDeliveriesParams;
+    function UnsetCreatedGte: TListWebhookDeliveriesParams;
+    function SetCreatedLte(const Value: Int64): TListWebhookDeliveriesParams;
+    function UnsetCreatedLte: TListWebhookDeliveriesParams;
+  end;
+
+  TListWebhookDeliveryAttemptsParams = class(TRaimsParams)
+  public
+    function SetPageSize(const Value: Int64): TListWebhookDeliveryAttemptsParams;
+    function UnsetPageSize: TListWebhookDeliveryAttemptsParams;
+    function SetAfter(const Value: string): TListWebhookDeliveryAttemptsParams;
+    function UnsetAfter: TListWebhookDeliveryAttemptsParams;
+    function SetBefore(const Value: string): TListWebhookDeliveryAttemptsParams;
+    function UnsetBefore: TListWebhookDeliveryAttemptsParams;
+  end;
+
+  TListWebhookEventsParams = class(TRaimsParams)
+  public
+    function SetPageSize(const Value: Int64): TListWebhookEventsParams;
+    function UnsetPageSize: TListWebhookEventsParams;
+    function SetAfter(const Value: string): TListWebhookEventsParams;
+    function UnsetAfter: TListWebhookEventsParams;
+    function SetBefore(const Value: string): TListWebhookEventsParams;
+    function UnsetBefore: TListWebhookEventsParams;
+    function SetEventType(const Value: string): TListWebhookEventsParams;
+    function UnsetEventType: TListWebhookEventsParams;
+    function SetResourceId(const Value: string): TListWebhookEventsParams;
+    function UnsetResourceId: TListWebhookEventsParams;
+    function SetCreatedGte(const Value: Int64): TListWebhookEventsParams;
+    function UnsetCreatedGte: TListWebhookEventsParams;
+    function SetCreatedLte(const Value: Int64): TListWebhookEventsParams;
+    function UnsetCreatedLte: TListWebhookEventsParams;
+  end;
+
   TListWebhooksParams = class(TRaimsParams)
   public
     function SetPageSize(const Value: Int64): TListWebhooksParams;
@@ -370,6 +426,12 @@ type
   public
     function SetIdentifiers(const Value: TJSONArray): TRemoveCustomersParams;
     function UnsetIdentifiers: TRemoveCustomersParams;
+  end;
+
+  TResendWebhookDeliveriesParams = class(TRaimsParams)
+  public
+    function SetDeliveryIds(const Value: TArray<string>): TResendWebhookDeliveriesParams;
+    function UnsetDeliveryIds: TResendWebhookDeliveriesParams;
   end;
 
   TResolveChargeScenarioParams = class(TRaimsParams)
@@ -1283,6 +1345,18 @@ begin
   Result := Self;
 end;
 
+function TDeliverWebhookEventParams.SetWebhookId(const Value: string): TDeliverWebhookEventParams;
+begin
+  SetString('webhook_id', Value);
+  Result := Self;
+end;
+
+function TDeliverWebhookEventParams.UnsetWebhookId: TDeliverWebhookEventParams;
+begin
+  Unset('webhook_id');
+  Result := Self;
+end;
+
 function TGetBalanceForecastParams.SetPeriod(const Value: string): TGetBalanceForecastParams;
 begin
   SetString('period', Value);
@@ -2003,6 +2077,234 @@ begin
   Result := Self;
 end;
 
+function TListWebhookDeliveriesParams.SetPageSize(const Value: Int64): TListWebhookDeliveriesParams;
+begin
+  SetInt64('page_size', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.UnsetPageSize: TListWebhookDeliveriesParams;
+begin
+  Unset('page_size');
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.SetAfter(const Value: string): TListWebhookDeliveriesParams;
+begin
+  SetString('after', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.UnsetAfter: TListWebhookDeliveriesParams;
+begin
+  Unset('after');
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.SetBefore(const Value: string): TListWebhookDeliveriesParams;
+begin
+  SetString('before', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.UnsetBefore: TListWebhookDeliveriesParams;
+begin
+  Unset('before');
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.SetWebhookId(const Value: string): TListWebhookDeliveriesParams;
+begin
+  SetString('webhook_id', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.UnsetWebhookId: TListWebhookDeliveriesParams;
+begin
+  Unset('webhook_id');
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.SetEventType(const Value: string): TListWebhookDeliveriesParams;
+begin
+  SetString('event_type', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.UnsetEventType: TListWebhookDeliveriesParams;
+begin
+  Unset('event_type');
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.SetEventId(const Value: string): TListWebhookDeliveriesParams;
+begin
+  SetString('event_id', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.UnsetEventId: TListWebhookDeliveriesParams;
+begin
+  Unset('event_id');
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.SetStatus(const Value: string): TListWebhookDeliveriesParams;
+begin
+  SetString('status', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.UnsetStatus: TListWebhookDeliveriesParams;
+begin
+  Unset('status');
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.SetCreatedGte(const Value: Int64): TListWebhookDeliveriesParams;
+begin
+  SetInt64('created_gte', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.UnsetCreatedGte: TListWebhookDeliveriesParams;
+begin
+  Unset('created_gte');
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.SetCreatedLte(const Value: Int64): TListWebhookDeliveriesParams;
+begin
+  SetInt64('created_lte', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveriesParams.UnsetCreatedLte: TListWebhookDeliveriesParams;
+begin
+  Unset('created_lte');
+  Result := Self;
+end;
+
+function TListWebhookDeliveryAttemptsParams.SetPageSize(const Value: Int64): TListWebhookDeliveryAttemptsParams;
+begin
+  SetInt64('page_size', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveryAttemptsParams.UnsetPageSize: TListWebhookDeliveryAttemptsParams;
+begin
+  Unset('page_size');
+  Result := Self;
+end;
+
+function TListWebhookDeliveryAttemptsParams.SetAfter(const Value: string): TListWebhookDeliveryAttemptsParams;
+begin
+  SetString('after', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveryAttemptsParams.UnsetAfter: TListWebhookDeliveryAttemptsParams;
+begin
+  Unset('after');
+  Result := Self;
+end;
+
+function TListWebhookDeliveryAttemptsParams.SetBefore(const Value: string): TListWebhookDeliveryAttemptsParams;
+begin
+  SetString('before', Value);
+  Result := Self;
+end;
+
+function TListWebhookDeliveryAttemptsParams.UnsetBefore: TListWebhookDeliveryAttemptsParams;
+begin
+  Unset('before');
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.SetPageSize(const Value: Int64): TListWebhookEventsParams;
+begin
+  SetInt64('page_size', Value);
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.UnsetPageSize: TListWebhookEventsParams;
+begin
+  Unset('page_size');
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.SetAfter(const Value: string): TListWebhookEventsParams;
+begin
+  SetString('after', Value);
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.UnsetAfter: TListWebhookEventsParams;
+begin
+  Unset('after');
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.SetBefore(const Value: string): TListWebhookEventsParams;
+begin
+  SetString('before', Value);
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.UnsetBefore: TListWebhookEventsParams;
+begin
+  Unset('before');
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.SetEventType(const Value: string): TListWebhookEventsParams;
+begin
+  SetString('event_type', Value);
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.UnsetEventType: TListWebhookEventsParams;
+begin
+  Unset('event_type');
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.SetResourceId(const Value: string): TListWebhookEventsParams;
+begin
+  SetString('resource_id', Value);
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.UnsetResourceId: TListWebhookEventsParams;
+begin
+  Unset('resource_id');
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.SetCreatedGte(const Value: Int64): TListWebhookEventsParams;
+begin
+  SetInt64('created_gte', Value);
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.UnsetCreatedGte: TListWebhookEventsParams;
+begin
+  Unset('created_gte');
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.SetCreatedLte(const Value: Int64): TListWebhookEventsParams;
+begin
+  SetInt64('created_lte', Value);
+  Result := Self;
+end;
+
+function TListWebhookEventsParams.UnsetCreatedLte: TListWebhookEventsParams;
+begin
+  Unset('created_lte');
+  Result := Self;
+end;
+
 function TListWebhooksParams.SetPageSize(const Value: Int64): TListWebhooksParams;
 begin
   SetInt64('page_size', Value);
@@ -2170,6 +2472,28 @@ end;
 function TRemoveCustomersParams.UnsetIdentifiers: TRemoveCustomersParams;
 begin
   Unset('identifiers');
+  Result := Self;
+end;
+
+function TResendWebhookDeliveriesParams.SetDeliveryIds(const Value: TArray<string>): TResendWebhookDeliveriesParams;
+var
+  Values: TJSONArray;
+  Index: Integer;
+begin
+  Values := TJSONArray.Create;
+  try
+    for Index := 0 to Length(Value) - 1 do
+      Values.AddElement(TJSONString.Create(Value[Index]));
+    SetJson('delivery_ids', Values);
+  finally
+    Values.Free;
+  end;
+  Result := Self;
+end;
+
+function TResendWebhookDeliveriesParams.UnsetDeliveryIds: TResendWebhookDeliveriesParams;
+begin
+  Unset('delivery_ids');
   Result := Self;
 end;
 

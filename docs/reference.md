@@ -44,6 +44,16 @@ Generated from the pinned public API contract. Amounts use integer cents; dates 
 | `Refunds.RetrieveReceipt` | `GET /v1/refunds/{id}/receipt` | `none` | `TFinancialDocument` | 200 | No |
 | `Statements.List` | `GET /v1/statements` | `TListStatementsParams` | `TStatementListResponse` | 200 | No |
 | `Statements.Retrieve` | `GET /v1/statements/{id}` | `none` | `TStatement` | 200 | No |
+| `WebhookDeliveries.List` | `GET /v1/webhook_deliveries` | `TListWebhookDeliveriesParams` | `TWebhookDeliveryListResponse` | 200 | No |
+| `WebhookDeliveries.Retrieve` | `GET /v1/webhook_deliveries/{delivery_id}` | `none` | `TWebhookDelivery` | 200 | No |
+| `WebhookDeliveries.ListAttempts` | `GET /v1/webhook_deliveries/{delivery_id}/attempts` | `TListWebhookDeliveryAttemptsParams` | `TWebhookAttemptListResponse` | 200 | No |
+| `WebhookDeliveries.RetrieveAttempt` | `GET /v1/webhook_deliveries/{delivery_id}/attempts/{attempt_id}` | `none` | `TWebhookAttemptDetail` | 200 | No |
+| `WebhookDeliveries.Resend` | `POST /v1/webhook_deliveries/{delivery_id}/resend` | `none` | `TWebhookDeliveryResendAccepted` | 202 | Yes |
+| `WebhookDeliveries.ResendMany` | `POST /v1/webhook_deliveries/resend` | `TResendWebhookDeliveriesParams` | `TWebhookBulkResendAccepted` | 202 | Yes |
+| `WebhookDeliveries.Advance` | `POST /v1/webhook_deliveries/{delivery_id}/advance` | `none` | `TWebhookAdvanceAccepted` | 202 | Yes |
+| `WebhookEvents.List` | `GET /v1/webhook_events` | `TListWebhookEventsParams` | `TWebhookEventListResponse` | 200 | No |
+| `WebhookEvents.Retrieve` | `GET /v1/webhook_events/{event_id}` | `none` | `TWebhookEventDetail` | 200 | No |
+| `WebhookEvents.Deliver` | `POST /v1/webhook_events/{event_id}/deliveries` | `TDeliverWebhookEventParams` | `TWebhookDeliveryResendAccepted` | 202 | Yes |
 | `WebhookEventTypes.List` | `GET /v1/webhook_event_types` | `none` | `TWebhookEventTypeListResponse` | 200 | No |
 | `Webhooks.Create` | `POST /v1/webhooks` | `TCreateWebhookParams` | `TWebhookCreated` | 201 | Yes |
 | `Webhooks.List` | `GET /v1/webhooks` | `TListWebhooksParams` | `TWebhookListResponse` | 200 | No |

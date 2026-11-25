@@ -13,17 +13,35 @@ type
   TAccountFee = class;
   TAccountFees = class;
   TAccountNumber = class;
+  TAccountRestoredWebhookEvent = class;
   TAutomaticWithdrawalSettings = class;
   TBalance = class;
   TBalanceForecast = class;
+  TBalanceHoldCreatedWebhookEvent = class;
+  TBalanceHoldReleasedWebhookEvent = class;
+  TBoletoAvailableWebhookEvent = class;
+  TBoletoCompensatedWebhookEvent = class;
+  TBoletoIssuanceFailedWebhookEvent = class;
+  TBoletoOverpaymentReceivedWebhookEvent = class;
+  TBoletoPartialSettlementDetectedWebhookEvent = class;
   TCharge = class;
   TChargeBoletoCompensation = class;
   TChargeBoletoPaymentInformation = class;
+  TChargeBoletoSettlement = class;
+  TChargeCanceledWebhookEvent = class;
   TChargeCreated = class;
+  TChargeCreatedWebhookEvent = class;
+  TChargeExpiredWebhookEvent = class;
+  TChargeFailedWebhookEvent = class;
+  TChargeFullyRefundedWebhookEvent = class;
   TChargeListItem = class;
   TChargeListPage = class;
   TChargeListResponse = class;
+  TChargePaidWebhookEvent = class;
+  TChargePartiallyRefundedWebhookEvent = class;
   TChargePaymentInformation = class;
+  TChargePaymentInstructionsAvailableWebhookEvent = class;
+  TChargePaymentInstructionsFailedWebhookEvent = class;
   TChargePixPaymentInformation = class;
   TChargeRevocationPending = class;
   TChargeRevoked = class;
@@ -31,44 +49,77 @@ type
   TChargeSimulation = class;
   TChargeStatistics = class;
   TChargeStatisticsAggregate = class;
+  TChargeUpdatedWebhookEvent = class;
   TCheckoutAsset = class;
   TCheckoutAssetUpload = class;
   TCheckoutAssetUploadDeleted = class;
   TCheckoutSettings = class;
   TCustomerBatchDeleted = class;
   TCustomerCreated = class;
+  TCustomerCreatedWebhookEvent = class;
   TCustomerDeleted = class;
+  TCustomerDeletedWebhookEvent = class;
   TCustomerListItem = class;
   TCustomerListPage = class;
   TCustomerListResponse = class;
+  TCustomerUpdatedWebhookEvent = class;
   TDispute = class;
+  TDisputeClosedWebhookEvent = class;
+  TDisputeFundsDebitedWebhookEvent = class;
   TDisputeListItem = class;
   TDisputeListPage = class;
   TDisputeListResponse = class;
+  TDisputeOpenedWebhookEvent = class;
+  TDisputeUpdatedWebhookEvent = class;
   TError = class;
   TErrorResponse = class;
   TFieldError = class;
   TFinancialDocument = class;
   TPaymentLink = class;
+  TPaymentLinkCreatedWebhookEvent = class;
   TPaymentLinkDetails = class;
   TPaymentLinkEmailRequestAccepted = class;
   TPaymentLinkListPage = class;
   TPaymentLinkListResponse = class;
   TPaymentLinkUnavailableReason = class;
+  TPaymentLinkUpdatedWebhookEvent = class;
   TPaymentReceipt = class;
+  TPixAvailableWebhookEvent = class;
+  TPixIssuanceFailedWebhookEvent = class;
+  TPixRefundReceivedWebhookEvent = class;
   TReceiptParty = class;
   TRefund = class;
+  TRefundAcceptedWebhookEvent = class;
+  TRefundCompletedWebhookEvent = class;
   TRefundEligibility = class;
+  TRefundFailedWebhookEvent = class;
   TRefundFailureReason = class;
   TRefundListPage = class;
   TRefundListResponse = class;
+  TRefundReconciliationRequiredWebhookEvent = class;
+  TRefundRequestedWebhookEvent = class;
   TRefundUnavailableReason = class;
   TRevokeChargeResult = class;
   TStatement = class;
+  TStatementCreatedWebhookEvent = class;
   TStatementListPage = class;
   TStatementListResponse = class;
+  TTedReceivedWebhookEvent = class;
   TWebhook = class;
+  TWebhookAdvanceAccepted = class;
+  TWebhookAttempt = class;
+  TWebhookAttemptDetail = class;
+  TWebhookAttemptListResponse = class;
+  TWebhookBulkResendAccepted = class;
+  TWebhookBulkResendItem = class;
   TWebhookCreated = class;
+  TWebhookDelivery = class;
+  TWebhookDeliveryListResponse = class;
+  TWebhookDeliveryPage = class;
+  TWebhookDeliveryResendAccepted = class;
+  TWebhookEvent = class;
+  TWebhookEventDetail = class;
+  TWebhookEventListResponse = class;
   TWebhookEventType = class;
   TWebhookEventTypeListResponse = class;
   TWebhookHealth = class;
@@ -77,17 +128,24 @@ type
   TWebhookPause = class;
   TWebhookSecretRotation = class;
   TWebhookTestAccepted = class;
+  TWebhookTestWebhookEvent = class;
   TWithdrawal = class;
+  TWithdrawalAcceptedWebhookEvent = class;
+  TWithdrawalAutomaticSettingsChangedWebhookEvent = class;
   TWithdrawalBankAccount = class;
+  TWithdrawalCompletedWebhookEvent = class;
   TWithdrawalDestination = class;
+  TWithdrawalDestinationChangedWebhookEvent = class;
   TWithdrawalDestinationListPage = class;
   TWithdrawalDestinationListResponse = class;
+  TWithdrawalFailedWebhookEvent = class;
   TWithdrawalFailureReason = class;
   TWithdrawalLimits = class;
   TWithdrawalListPage = class;
   TWithdrawalListResponse = class;
   TWithdrawalPeriodLimits = class;
   TWithdrawalPixDestination = class;
+  TWithdrawalRequestedWebhookEvent = class;
   TWithdrawalSummary = class;
 
   TAccountContext = class(TRaimsResource)
@@ -146,6 +204,21 @@ type
     property Account: string read ReadAccount;
   end;
 
+  TAccountRestoredWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TAutomaticWithdrawalSettings = class(TRaimsResource)
   private
     function ReadEnabled: Boolean;
@@ -189,6 +262,111 @@ type
     property UpdatedAt: Int64 read ReadUpdatedAt;
   end;
 
+  TBalanceHoldCreatedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TBalanceHoldReleasedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TBoletoAvailableWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TBoletoCompensatedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TBoletoIssuanceFailedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TBoletoOverpaymentReceivedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TBoletoPartialSettlementDetectedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TCharge = class(TRaimsResource)
   private
     function ReadId: string;
@@ -207,6 +385,7 @@ type
     function ReadPaymentMethodTypes: TArray<Int64>;
     function ReadExternalReference: string;
     function ReadMetadata: TJSONObject;
+    function ReadBoletoSettlement: TChargeBoletoSettlement;
   public
     property Id: string read ReadId;
     property CustomerId: string read ReadCustomerId;
@@ -224,6 +403,7 @@ type
     property PaymentMethodTypes: TArray<Int64> read ReadPaymentMethodTypes;
     property ExternalReference: string read ReadExternalReference;
     property Metadata: TJSONObject read ReadMetadata;
+    property BoletoSettlement: TChargeBoletoSettlement read ReadBoletoSettlement;
   end;
 
   TChargeBoletoCompensation = class(TRaimsResource)
@@ -248,6 +428,32 @@ type
     property LineDigits: string read ReadLineDigits;
     property Barcode: string read ReadBarcode;
     property DueDate: Int64 read ReadDueDate;
+  end;
+
+  TChargeBoletoSettlement = class(TRaimsResource)
+  private
+    function ReadObservedAmountCents: Int64;
+    function ReadConfirmedTotalCents: Int64;
+    function ReadOverpaymentCents: Int64;
+  public
+    property ObservedAmountCents: Int64 read ReadObservedAmountCents;
+    property ConfirmedTotalCents: Int64 read ReadConfirmedTotalCents;
+    property OverpaymentCents: Int64 read ReadOverpaymentCents;
+  end;
+
+  TChargeCanceledWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TChargeCreated = class(TRaimsResource)
@@ -281,6 +487,66 @@ type
     property ExternalReference: string read ReadExternalReference;
     property PaymentInformation: TChargePaymentInformation read ReadPaymentInformation;
     property Metadata: TJSONObject read ReadMetadata;
+  end;
+
+  TChargeCreatedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TChargeExpiredWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TChargeFailedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TChargeFullyRefundedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TChargeListItem = class(TRaimsResource)
@@ -342,6 +608,36 @@ type
     property Page: TChargeListPage read ReadPage;
   end;
 
+  TChargePaidWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TChargePartiallyRefundedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TChargePaymentInformation = class(TRaimsResource)
   private
     function ReadPix: TChargePixPaymentInformation;
@@ -359,6 +655,36 @@ type
     property BoletoStatus: string read ReadBoletoStatus;
     property BoletoError: TError read ReadBoletoError;
     property BoletoPaymentStatus: string read ReadBoletoPaymentStatus;
+  end;
+
+  TChargePaymentInstructionsAvailableWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TChargePaymentInstructionsFailedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TChargePixPaymentInformation = class(TRaimsResource)
@@ -458,6 +784,21 @@ type
     property AmountCents: Int64 read ReadAmountCents;
   end;
 
+  TChargeUpdatedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TCheckoutAsset = class(TRaimsResource)
   private
     function ReadUrl: string;
@@ -544,6 +885,21 @@ type
     property Metadata: TJSONObject read ReadMetadata;
   end;
 
+  TCustomerCreatedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TCustomerDeleted = class(TRaimsResource)
   private
     function ReadId: string;
@@ -551,6 +907,21 @@ type
   public
     property Id: string read ReadId;
     property Deleted: Boolean read ReadDeleted;
+  end;
+
+  TCustomerDeletedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TCustomerListItem = class(TRaimsResource)
@@ -624,6 +995,21 @@ type
     property Page: TCustomerListPage read ReadPage;
   end;
 
+  TCustomerUpdatedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TDispute = class(TRaimsResource)
   private
     function ReadOpenedAt: Int64;
@@ -671,6 +1057,36 @@ type
     property UpdatedAt: Int64 read ReadUpdatedAt;
   end;
 
+  TDisputeClosedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TDisputeFundsDebitedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TDisputeListItem = class(TRaimsResource)
   private
     function ReadId: string;
@@ -716,6 +1132,36 @@ type
     function PreviousPage: TDisputeListResponse; reintroduce;
     property List: TArray<TDisputeListItem> read ReadList;
     property Page: TDisputeListPage read ReadPage;
+  end;
+
+  TDisputeOpenedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TDisputeUpdatedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TError = class(TRaimsResource)
@@ -777,6 +1223,21 @@ type
     property CreatedAt: Int64 read ReadCreatedAt;
     property UpdatedAt: Int64 read ReadUpdatedAt;
     property IsActive: Boolean read ReadIsActive;
+  end;
+
+  TPaymentLinkCreatedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TPaymentLinkDetails = class(TRaimsResource)
@@ -858,6 +1319,21 @@ type
     property Message: string read ReadMessage;
   end;
 
+  TPaymentLinkUpdatedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TPaymentReceipt = class(TRaimsResource)
   private
     function ReadChargeId: string;
@@ -881,6 +1357,51 @@ type
     property IsSandbox: Boolean read ReadIsSandbox;
     property IsFiscalDocument: Boolean read ReadIsFiscalDocument;
     property EndToEndId: string read ReadEndToEndId;
+  end;
+
+  TPixAvailableWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TPixIssuanceFailedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TPixRefundReceivedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TReceiptParty = class(TRaimsResource)
@@ -915,6 +1436,36 @@ type
     property FailureReason: TRefundFailureReason read ReadFailureReason;
   end;
 
+  TRefundAcceptedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TRefundCompletedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TRefundEligibility = class(TRaimsResource)
   private
     function ReadChargeId: string;
@@ -930,6 +1481,21 @@ type
     property RefundableAmountCents: Int64 read ReadRefundableAmountCents;
     property PendingAmountCents: Int64 read ReadPendingAmountCents;
     property MaxRefundAmountCents: Int64 read ReadMaxRefundAmountCents;
+  end;
+
+  TRefundFailedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TRefundFailureReason = class(TRaimsResource)
@@ -965,6 +1531,36 @@ type
     function PreviousPage: TRefundListResponse; reintroduce;
     property List: TArray<TRefund> read ReadList;
     property Page: TRefundListPage read ReadPage;
+  end;
+
+  TRefundReconciliationRequiredWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TRefundRequestedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TRefundUnavailableReason = class(TRaimsResource)
@@ -1010,6 +1606,21 @@ type
     property DisputeId: string read ReadDisputeId;
   end;
 
+  TStatementCreatedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TStatementListPage = class(TRaimsResource)
   private
     function ReadPageSize: Int64;
@@ -1034,6 +1645,21 @@ type
     function PreviousPage: TStatementListResponse; reintroduce;
     property List: TArray<TStatement> read ReadList;
     property Page: TStatementListPage read ReadPage;
+  end;
+
+  TTedReceivedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TWebhook = class(TRaimsResource)
@@ -1065,6 +1691,106 @@ type
     property PausedAt: Int64 read ReadPausedAt;
   end;
 
+  TWebhookAdvanceAccepted = class(TRaimsResource)
+  private
+    function ReadDeliveryId: string;
+  public
+    property DeliveryId: string read ReadDeliveryId;
+  end;
+
+  TWebhookAttempt = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadDeliveryId: string;
+    function ReadAttemptNumber: Int64;
+    function ReadCreatedAt: Int64;
+    function ReadStatusCode: Int64;
+    function ReadDurationMs: Double;
+    function ReadDestinationIp: string;
+    function ReadErrorCode: string;
+    function ReadEndpointUrl: string;
+    function ReadRequestAvailable: Boolean;
+    function ReadResponseBodyAvailable: Boolean;
+    function ReadResponseBodyTruncated: Boolean;
+  public
+    property Id: string read ReadId;
+    property DeliveryId: string read ReadDeliveryId;
+    property AttemptNumber: Int64 read ReadAttemptNumber;
+    property CreatedAt: Int64 read ReadCreatedAt;
+    property StatusCode: Int64 read ReadStatusCode;
+    property DurationMs: Double read ReadDurationMs;
+    property DestinationIp: string read ReadDestinationIp;
+    property ErrorCode: string read ReadErrorCode;
+    property EndpointUrl: string read ReadEndpointUrl;
+    property RequestAvailable: Boolean read ReadRequestAvailable;
+    property ResponseBodyAvailable: Boolean read ReadResponseBodyAvailable;
+    property ResponseBodyTruncated: Boolean read ReadResponseBodyTruncated;
+  end;
+
+  TWebhookAttemptDetail = class(TRaimsResource)
+  private
+    function ReadRequestBody: string;
+    function ReadResponseBody: string;
+    function ReadId: string;
+    function ReadDeliveryId: string;
+    function ReadAttemptNumber: Int64;
+    function ReadCreatedAt: Int64;
+    function ReadStatusCode: Int64;
+    function ReadDurationMs: Double;
+    function ReadDestinationIp: string;
+    function ReadErrorCode: string;
+    function ReadEndpointUrl: string;
+    function ReadRequestAvailable: Boolean;
+    function ReadResponseBodyAvailable: Boolean;
+    function ReadResponseBodyTruncated: Boolean;
+  public
+    property RequestBody: string read ReadRequestBody;
+    property ResponseBody: string read ReadResponseBody;
+    property Id: string read ReadId;
+    property DeliveryId: string read ReadDeliveryId;
+    property AttemptNumber: Int64 read ReadAttemptNumber;
+    property CreatedAt: Int64 read ReadCreatedAt;
+    property StatusCode: Int64 read ReadStatusCode;
+    property DurationMs: Double read ReadDurationMs;
+    property DestinationIp: string read ReadDestinationIp;
+    property ErrorCode: string read ReadErrorCode;
+    property EndpointUrl: string read ReadEndpointUrl;
+    property RequestAvailable: Boolean read ReadRequestAvailable;
+    property ResponseBodyAvailable: Boolean read ReadResponseBodyAvailable;
+    property ResponseBodyTruncated: Boolean read ReadResponseBodyTruncated;
+  end;
+
+  TWebhookAttemptListResponse = class(TRaimsCollection)
+  private
+    function ReadList: TArray<TWebhookAttempt>;
+    function ReadPage: TWebhookDeliveryPage;
+  public
+    function NextPage: TWebhookAttemptListResponse; reintroduce;
+    function PreviousPage: TWebhookAttemptListResponse; reintroduce;
+    property List: TArray<TWebhookAttempt> read ReadList;
+    property Page: TWebhookDeliveryPage read ReadPage;
+  end;
+
+  TWebhookBulkResendAccepted = class(TRaimsResource)
+  private
+    function ReadResults: TArray<TWebhookBulkResendItem>;
+  public
+    property Results: TArray<TWebhookBulkResendItem> read ReadResults;
+  end;
+
+  TWebhookBulkResendItem = class(TRaimsResource)
+  private
+    function ReadSourceDeliveryId: string;
+    function ReadDeliveryId: string;
+    function ReadEventId: string;
+    function ReadError: TError;
+  public
+    property SourceDeliveryId: string read ReadSourceDeliveryId;
+    property DeliveryId: string read ReadDeliveryId;
+    property EventId: string read ReadEventId;
+    property Error: TError read ReadError;
+  end;
+
   TWebhookCreated = class(TRaimsResource)
   private
     function ReadId: string;
@@ -1094,6 +1820,109 @@ type
     property SecretKey: string read ReadSecretKey;
     property IsPaused: Boolean read ReadIsPaused;
     property PausedAt: Int64 read ReadPausedAt;
+  end;
+
+  TWebhookDelivery = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadWebhookId: string;
+    function ReadEventId: string;
+    function ReadEventType: string;
+    function ReadStatus: string;
+    function ReadCreatedAt: Int64;
+    function ReadEventCreatedAt: Int64;
+    function ReadDeadlineAt: Int64;
+    function ReadNextAttemptAt: Int64;
+    function ReadUpdatedAt: Int64;
+  public
+    property Id: string read ReadId;
+    property WebhookId: string read ReadWebhookId;
+    property EventId: string read ReadEventId;
+    property EventType: string read ReadEventType;
+    property Status: string read ReadStatus;
+    property CreatedAt: Int64 read ReadCreatedAt;
+    property EventCreatedAt: Int64 read ReadEventCreatedAt;
+    property DeadlineAt: Int64 read ReadDeadlineAt;
+    property NextAttemptAt: Int64 read ReadNextAttemptAt;
+    property UpdatedAt: Int64 read ReadUpdatedAt;
+  end;
+
+  TWebhookDeliveryListResponse = class(TRaimsCollection)
+  private
+    function ReadList: TArray<TWebhookDelivery>;
+    function ReadPage: TWebhookDeliveryPage;
+  public
+    function NextPage: TWebhookDeliveryListResponse; reintroduce;
+    function PreviousPage: TWebhookDeliveryListResponse; reintroduce;
+    property List: TArray<TWebhookDelivery> read ReadList;
+    property Page: TWebhookDeliveryPage read ReadPage;
+  end;
+
+  TWebhookDeliveryPage = class(TRaimsResource)
+  private
+    function ReadPageSize: Int64;
+    function ReadHasNext: Boolean;
+    function ReadHasPrevious: Boolean;
+    function ReadNextAfter: string;
+    function ReadPreviousBefore: string;
+  public
+    property PageSize: Int64 read ReadPageSize;
+    property HasNext: Boolean read ReadHasNext;
+    property HasPrevious: Boolean read ReadHasPrevious;
+    property NextAfter: string read ReadNextAfter;
+    property PreviousBefore: string read ReadPreviousBefore;
+  end;
+
+  TWebhookDeliveryResendAccepted = class(TRaimsResource)
+  private
+    function ReadDeliveryId: string;
+    function ReadEventId: string;
+  public
+    property DeliveryId: string read ReadDeliveryId;
+    property EventId: string read ReadEventId;
+  end;
+
+  TWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadEventType: string;
+    function ReadCreatedAt: Int64;
+    function ReadResourceType: string;
+    function ReadResourceId: string;
+  public
+    property Id: string read ReadId;
+    property EventType: string read ReadEventType;
+    property CreatedAt: Int64 read ReadCreatedAt;
+    property ResourceType: string read ReadResourceType;
+    property ResourceId: string read ReadResourceId;
+  end;
+
+  TWebhookEventDetail = class(TRaimsResource)
+  private
+    function ReadPayload: string;
+    function ReadId: string;
+    function ReadEventType: string;
+    function ReadCreatedAt: Int64;
+    function ReadResourceType: string;
+    function ReadResourceId: string;
+  public
+    property Payload: string read ReadPayload;
+    property Id: string read ReadId;
+    property EventType: string read ReadEventType;
+    property CreatedAt: Int64 read ReadCreatedAt;
+    property ResourceType: string read ReadResourceType;
+    property ResourceId: string read ReadResourceId;
+  end;
+
+  TWebhookEventListResponse = class(TRaimsCollection)
+  private
+    function ReadList: TArray<TWebhookEvent>;
+    function ReadPage: TWebhookDeliveryPage;
+  public
+    function NextPage: TWebhookEventListResponse; reintroduce;
+    function PreviousPage: TWebhookEventListResponse; reintroduce;
+    property List: TArray<TWebhookEvent> read ReadList;
+    property Page: TWebhookDeliveryPage read ReadPage;
   end;
 
   TWebhookEventType = class(TRaimsResource)
@@ -1186,6 +2015,21 @@ type
     property DeliveryId: string read ReadDeliveryId;
   end;
 
+  TWebhookTestWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TWithdrawal = class(TRaimsResource)
   private
     function ReadId: string;
@@ -1215,6 +2059,36 @@ type
     property CanceledAt: Int64 read ReadCanceledAt;
   end;
 
+  TWithdrawalAcceptedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
+  TWithdrawalAutomaticSettingsChangedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
+  end;
+
   TWithdrawalBankAccount = class(TRaimsResource)
   private
     function ReadBankCode: string;
@@ -1224,6 +2098,21 @@ type
     property BankCode: string read ReadBankCode;
     property Branch: string read ReadBranch;
     property AccountNumberMasked: string read ReadAccountNumberMasked;
+  end;
+
+  TWithdrawalCompletedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TWithdrawalDestination = class(TRaimsResource)
@@ -1243,6 +2132,21 @@ type
     property BankIspb: string read ReadBankIspb;
     property IsDefault: Boolean read ReadIsDefault;
     property VerifiedAt: Int64 read ReadVerifiedAt;
+  end;
+
+  TWithdrawalDestinationChangedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TWithdrawalDestinationListPage = class(TRaimsResource)
@@ -1269,6 +2173,21 @@ type
     function PreviousPage: TWithdrawalDestinationListResponse; reintroduce;
     property List: TArray<TWithdrawalDestination> read ReadList;
     property Page: TWithdrawalDestinationListPage read ReadPage;
+  end;
+
+  TWithdrawalFailedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TWithdrawalFailureReason = class(TRaimsResource)
@@ -1355,6 +2274,21 @@ type
     property KeyMasked: string read ReadKeyMasked;
     property HolderName: string read ReadHolderName;
     property BankIspb: string read ReadBankIspb;
+  end;
+
+  TWithdrawalRequestedWebhookEvent = class(TRaimsResource)
+  private
+    function ReadId: string;
+    function ReadType: string;
+    function ReadCreatedAt: string;
+    function ReadEnvironment: string;
+    function ReadData: TJSONObject;
+  public
+    property Id: string read ReadId;
+    property &Type: string read ReadType;
+    property CreatedAt: string read ReadCreatedAt;
+    property Environment: string read ReadEnvironment;
+    property Data: TJSONObject read ReadData;
   end;
 
   TWithdrawalSummary = class(TRaimsResource)
@@ -1470,6 +2404,31 @@ begin
   Result := GetString('account');
 end;
 
+function TAccountRestoredWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TAccountRestoredWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TAccountRestoredWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TAccountRestoredWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TAccountRestoredWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
 function TAutomaticWithdrawalSettings.ReadEnabled: Boolean;
 begin
   Result := GetBoolean('enabled');
@@ -1538,6 +2497,181 @@ end;
 function TBalanceForecast.ReadUpdatedAt: Int64;
 begin
   Result := GetInt64('updated_at');
+end;
+
+function TBalanceHoldCreatedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TBalanceHoldCreatedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TBalanceHoldCreatedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TBalanceHoldCreatedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TBalanceHoldCreatedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TBalanceHoldReleasedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TBalanceHoldReleasedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TBalanceHoldReleasedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TBalanceHoldReleasedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TBalanceHoldReleasedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TBoletoAvailableWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TBoletoAvailableWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TBoletoAvailableWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TBoletoAvailableWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TBoletoAvailableWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TBoletoCompensatedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TBoletoCompensatedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TBoletoCompensatedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TBoletoCompensatedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TBoletoCompensatedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TBoletoIssuanceFailedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TBoletoIssuanceFailedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TBoletoIssuanceFailedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TBoletoIssuanceFailedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TBoletoIssuanceFailedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TBoletoOverpaymentReceivedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TBoletoOverpaymentReceivedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TBoletoOverpaymentReceivedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TBoletoOverpaymentReceivedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TBoletoOverpaymentReceivedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TBoletoPartialSettlementDetectedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TBoletoPartialSettlementDetectedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TBoletoPartialSettlementDetectedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TBoletoPartialSettlementDetectedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TBoletoPartialSettlementDetectedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TCharge.ReadId: string;
@@ -1638,6 +2772,17 @@ begin
   Result := GetObject('metadata');
 end;
 
+function TCharge.ReadBoletoSettlement: TChargeBoletoSettlement;
+var
+  Value: TJSONObject;
+begin
+  Value := GetObject('boleto_settlement');
+  if Value = nil then
+    Result := nil
+  else
+    Result := TChargeBoletoSettlement.Create(Value);
+end;
+
 function TChargeBoletoCompensation.ReadChargeId: string;
 begin
   Result := GetString('charge_id');
@@ -1671,6 +2816,46 @@ end;
 function TChargeBoletoPaymentInformation.ReadDueDate: Int64;
 begin
   Result := GetInt64('due_date');
+end;
+
+function TChargeBoletoSettlement.ReadObservedAmountCents: Int64;
+begin
+  Result := GetInt64('observed_amount_cents');
+end;
+
+function TChargeBoletoSettlement.ReadConfirmedTotalCents: Int64;
+begin
+  Result := GetInt64('confirmed_total_cents');
+end;
+
+function TChargeBoletoSettlement.ReadOverpaymentCents: Int64;
+begin
+  Result := GetInt64('overpayment_cents');
+end;
+
+function TChargeCanceledWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TChargeCanceledWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TChargeCanceledWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TChargeCanceledWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TChargeCanceledWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TChargeCreated.ReadId: string;
@@ -1759,6 +2944,106 @@ end;
 function TChargeCreated.ReadMetadata: TJSONObject;
 begin
   Result := GetObject('metadata');
+end;
+
+function TChargeCreatedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TChargeCreatedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TChargeCreatedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TChargeCreatedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TChargeCreatedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TChargeExpiredWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TChargeExpiredWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TChargeExpiredWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TChargeExpiredWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TChargeExpiredWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TChargeFailedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TChargeFailedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TChargeFailedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TChargeFailedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TChargeFailedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TChargeFullyRefundedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TChargeFullyRefundedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TChargeFullyRefundedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TChargeFullyRefundedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TChargeFullyRefundedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TChargeListItem.ReadId: string;
@@ -1912,6 +3197,56 @@ begin
   Result := TChargeListResponse(inherited PreviousPage);
 end;
 
+function TChargePaidWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TChargePaidWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TChargePaidWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TChargePaidWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TChargePaidWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TChargePartiallyRefundedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TChargePartiallyRefundedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TChargePartiallyRefundedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TChargePartiallyRefundedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TChargePartiallyRefundedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
 function TChargePaymentInformation.ReadPix: TChargePixPaymentInformation;
 var
   Value: TJSONObject;
@@ -1969,6 +3304,56 @@ end;
 function TChargePaymentInformation.ReadBoletoPaymentStatus: string;
 begin
   Result := GetString('boleto_payment_status');
+end;
+
+function TChargePaymentInstructionsAvailableWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TChargePaymentInstructionsAvailableWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TChargePaymentInstructionsAvailableWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TChargePaymentInstructionsAvailableWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TChargePaymentInstructionsAvailableWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TChargePaymentInstructionsFailedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TChargePaymentInstructionsFailedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TChargePaymentInstructionsFailedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TChargePaymentInstructionsFailedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TChargePaymentInstructionsFailedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TChargePixPaymentInformation.ReadCopyPaste: string;
@@ -2142,6 +3527,31 @@ end;
 function TChargeStatisticsAggregate.ReadAmountCents: Int64;
 begin
   Result := GetInt64('amount_cents');
+end;
+
+function TChargeUpdatedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TChargeUpdatedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TChargeUpdatedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TChargeUpdatedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TChargeUpdatedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TCheckoutAsset.ReadUrl: string;
@@ -2350,6 +3760,31 @@ begin
   Result := GetObject('metadata');
 end;
 
+function TCustomerCreatedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TCustomerCreatedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TCustomerCreatedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TCustomerCreatedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TCustomerCreatedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
 function TCustomerDeleted.ReadId: string;
 begin
   Result := GetString('id');
@@ -2358,6 +3793,31 @@ end;
 function TCustomerDeleted.ReadDeleted: Boolean;
 begin
   Result := GetBoolean('deleted');
+end;
+
+function TCustomerDeletedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TCustomerDeletedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TCustomerDeletedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TCustomerDeletedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TCustomerDeletedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TCustomerListItem.ReadId: string;
@@ -2529,6 +3989,31 @@ begin
   Result := TCustomerListResponse(inherited PreviousPage);
 end;
 
+function TCustomerUpdatedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TCustomerUpdatedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TCustomerUpdatedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TCustomerUpdatedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TCustomerUpdatedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
 function TDispute.ReadOpenedAt: Int64;
 begin
   Result := GetInt64('opened_at');
@@ -2632,6 +4117,56 @@ end;
 function TDispute.ReadUpdatedAt: Int64;
 begin
   Result := GetInt64('updated_at');
+end;
+
+function TDisputeClosedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TDisputeClosedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TDisputeClosedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TDisputeClosedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TDisputeClosedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TDisputeFundsDebitedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TDisputeFundsDebitedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TDisputeFundsDebitedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TDisputeFundsDebitedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TDisputeFundsDebitedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TDisputeListItem.ReadId: string;
@@ -2741,6 +4276,56 @@ end;
 function TDisputeListResponse.PreviousPage: TDisputeListResponse;
 begin
   Result := TDisputeListResponse(inherited PreviousPage);
+end;
+
+function TDisputeOpenedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TDisputeOpenedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TDisputeOpenedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TDisputeOpenedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TDisputeOpenedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TDisputeUpdatedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TDisputeUpdatedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TDisputeUpdatedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TDisputeUpdatedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TDisputeUpdatedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TError.ReadCode: string;
@@ -2867,6 +4452,31 @@ end;
 function TPaymentLink.ReadIsActive: Boolean;
 begin
   Result := GetBoolean('is_active');
+end;
+
+function TPaymentLinkCreatedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TPaymentLinkCreatedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TPaymentLinkCreatedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TPaymentLinkCreatedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TPaymentLinkCreatedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TPaymentLinkDetails.ReadId: string;
@@ -3063,6 +4673,31 @@ begin
   Result := GetString('message');
 end;
 
+function TPaymentLinkUpdatedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TPaymentLinkUpdatedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TPaymentLinkUpdatedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TPaymentLinkUpdatedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TPaymentLinkUpdatedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
 function TPaymentReceipt.ReadChargeId: string;
 begin
   Result := GetString('charge_id');
@@ -3123,6 +4758,81 @@ end;
 function TPaymentReceipt.ReadEndToEndId: string;
 begin
   Result := GetString('end_to_end_id');
+end;
+
+function TPixAvailableWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TPixAvailableWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TPixAvailableWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TPixAvailableWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TPixAvailableWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TPixIssuanceFailedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TPixIssuanceFailedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TPixIssuanceFailedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TPixIssuanceFailedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TPixIssuanceFailedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TPixRefundReceivedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TPixRefundReceivedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TPixRefundReceivedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TPixRefundReceivedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TPixRefundReceivedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TReceiptParty.ReadName: string;
@@ -3186,6 +4896,56 @@ begin
     Result := TRefundFailureReason.Create(Value);
 end;
 
+function TRefundAcceptedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TRefundAcceptedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TRefundAcceptedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TRefundAcceptedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TRefundAcceptedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TRefundCompletedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TRefundCompletedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TRefundCompletedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TRefundCompletedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TRefundCompletedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
 function TRefundEligibility.ReadChargeId: string;
 begin
   Result := GetString('charge_id');
@@ -3220,6 +4980,31 @@ end;
 function TRefundEligibility.ReadMaxRefundAmountCents: Int64;
 begin
   Result := GetInt64('max_refund_amount_cents');
+end;
+
+function TRefundFailedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TRefundFailedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TRefundFailedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TRefundFailedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TRefundFailedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TRefundFailureReason.ReadCode: string;
@@ -3301,6 +5086,56 @@ begin
   Result := TRefundListResponse(inherited PreviousPage);
 end;
 
+function TRefundReconciliationRequiredWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TRefundReconciliationRequiredWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TRefundReconciliationRequiredWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TRefundReconciliationRequiredWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TRefundReconciliationRequiredWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TRefundRequestedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TRefundRequestedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TRefundRequestedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TRefundRequestedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TRefundRequestedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
 function TRefundUnavailableReason.ReadCode: string;
 begin
   Result := GetString('code');
@@ -3371,6 +5206,31 @@ begin
   Result := GetString('dispute_id');
 end;
 
+function TStatementCreatedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TStatementCreatedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TStatementCreatedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TStatementCreatedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TStatementCreatedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
 function TStatementListPage.ReadPageSize: Int64;
 begin
   Result := GetInt64('page_size');
@@ -3438,6 +5298,31 @@ end;
 function TStatementListResponse.PreviousPage: TStatementListResponse;
 begin
   Result := TStatementListResponse(inherited PreviousPage);
+end;
+
+function TTedReceivedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TTedReceivedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TTedReceivedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TTedReceivedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TTedReceivedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TWebhook.ReadId: string;
@@ -3510,6 +5395,234 @@ end;
 function TWebhook.ReadPausedAt: Int64;
 begin
   Result := GetInt64('paused_at');
+end;
+
+function TWebhookAdvanceAccepted.ReadDeliveryId: string;
+begin
+  Result := GetString('delivery_id');
+end;
+
+function TWebhookAttempt.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWebhookAttempt.ReadDeliveryId: string;
+begin
+  Result := GetString('delivery_id');
+end;
+
+function TWebhookAttempt.ReadAttemptNumber: Int64;
+begin
+  Result := GetInt64('attempt_number');
+end;
+
+function TWebhookAttempt.ReadCreatedAt: Int64;
+begin
+  Result := GetInt64('created_at');
+end;
+
+function TWebhookAttempt.ReadStatusCode: Int64;
+begin
+  Result := GetInt64('status_code');
+end;
+
+function TWebhookAttempt.ReadDurationMs: Double;
+begin
+  Result := GetDouble('duration_ms');
+end;
+
+function TWebhookAttempt.ReadDestinationIp: string;
+begin
+  Result := GetString('destination_ip');
+end;
+
+function TWebhookAttempt.ReadErrorCode: string;
+begin
+  Result := GetString('error_code');
+end;
+
+function TWebhookAttempt.ReadEndpointUrl: string;
+begin
+  Result := GetString('endpoint_url');
+end;
+
+function TWebhookAttempt.ReadRequestAvailable: Boolean;
+begin
+  Result := GetBoolean('request_available');
+end;
+
+function TWebhookAttempt.ReadResponseBodyAvailable: Boolean;
+begin
+  Result := GetBoolean('response_body_available');
+end;
+
+function TWebhookAttempt.ReadResponseBodyTruncated: Boolean;
+begin
+  Result := GetBoolean('response_body_truncated');
+end;
+
+function TWebhookAttemptDetail.ReadRequestBody: string;
+begin
+  Result := GetString('request_body');
+end;
+
+function TWebhookAttemptDetail.ReadResponseBody: string;
+begin
+  Result := GetString('response_body');
+end;
+
+function TWebhookAttemptDetail.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWebhookAttemptDetail.ReadDeliveryId: string;
+begin
+  Result := GetString('delivery_id');
+end;
+
+function TWebhookAttemptDetail.ReadAttemptNumber: Int64;
+begin
+  Result := GetInt64('attempt_number');
+end;
+
+function TWebhookAttemptDetail.ReadCreatedAt: Int64;
+begin
+  Result := GetInt64('created_at');
+end;
+
+function TWebhookAttemptDetail.ReadStatusCode: Int64;
+begin
+  Result := GetInt64('status_code');
+end;
+
+function TWebhookAttemptDetail.ReadDurationMs: Double;
+begin
+  Result := GetDouble('duration_ms');
+end;
+
+function TWebhookAttemptDetail.ReadDestinationIp: string;
+begin
+  Result := GetString('destination_ip');
+end;
+
+function TWebhookAttemptDetail.ReadErrorCode: string;
+begin
+  Result := GetString('error_code');
+end;
+
+function TWebhookAttemptDetail.ReadEndpointUrl: string;
+begin
+  Result := GetString('endpoint_url');
+end;
+
+function TWebhookAttemptDetail.ReadRequestAvailable: Boolean;
+begin
+  Result := GetBoolean('request_available');
+end;
+
+function TWebhookAttemptDetail.ReadResponseBodyAvailable: Boolean;
+begin
+  Result := GetBoolean('response_body_available');
+end;
+
+function TWebhookAttemptDetail.ReadResponseBodyTruncated: Boolean;
+begin
+  Result := GetBoolean('response_body_truncated');
+end;
+
+function TWebhookAttemptListResponse.ReadList: TArray<TWebhookAttempt>;
+var
+  Values: TJSONArray;
+  Index: Integer;
+begin
+  Result := nil;
+  Values := GetArray('list');
+  if Values = nil then Exit;
+  SetLength(Result, Values.Count);
+  try
+    for Index := 0 to Values.Count - 1 do
+      begin
+      if not (Values.Items[Index] is TJSONObject) then
+        raise EConvertError.Create('Expected a JSON object in list');
+      Result[Index] := TWebhookAttempt.Create(TJSONObject(Values.Items[Index]));
+    end;
+  except
+    for Index := 0 to Length(Result) - 1 do
+      Result[Index].Free;
+    raise;
+  end;
+end;
+
+function TWebhookAttemptListResponse.ReadPage: TWebhookDeliveryPage;
+var
+  Value: TJSONObject;
+begin
+  Value := GetObject('page');
+  if Value = nil then
+    Result := nil
+  else
+    Result := TWebhookDeliveryPage.Create(Value);
+end;
+
+function TWebhookAttemptListResponse.NextPage: TWebhookAttemptListResponse;
+begin
+  Result := TWebhookAttemptListResponse(inherited NextPage);
+end;
+
+function TWebhookAttemptListResponse.PreviousPage: TWebhookAttemptListResponse;
+begin
+  Result := TWebhookAttemptListResponse(inherited PreviousPage);
+end;
+
+function TWebhookBulkResendAccepted.ReadResults: TArray<TWebhookBulkResendItem>;
+var
+  Values: TJSONArray;
+  Index: Integer;
+begin
+  Result := nil;
+  Values := GetArray('results');
+  if Values = nil then Exit;
+  SetLength(Result, Values.Count);
+  try
+    for Index := 0 to Values.Count - 1 do
+      begin
+      if not (Values.Items[Index] is TJSONObject) then
+        raise EConvertError.Create('Expected a JSON object in results');
+      Result[Index] := TWebhookBulkResendItem.Create(TJSONObject(Values.Items[Index]));
+    end;
+  except
+    for Index := 0 to Length(Result) - 1 do
+      Result[Index].Free;
+    raise;
+  end;
+end;
+
+function TWebhookBulkResendItem.ReadSourceDeliveryId: string;
+begin
+  Result := GetString('source_delivery_id');
+end;
+
+function TWebhookBulkResendItem.ReadDeliveryId: string;
+begin
+  Result := GetString('delivery_id');
+end;
+
+function TWebhookBulkResendItem.ReadEventId: string;
+begin
+  Result := GetString('event_id');
+end;
+
+function TWebhookBulkResendItem.ReadError: TError;
+var
+  Value: TJSONObject;
+begin
+  Value := GetObject('error');
+  if Value = nil then
+    Result := nil
+  else
+    Result := TError.Create(Value);
 end;
 
 function TWebhookCreated.ReadId: string;
@@ -3587,6 +5700,234 @@ end;
 function TWebhookCreated.ReadPausedAt: Int64;
 begin
   Result := GetInt64('paused_at');
+end;
+
+function TWebhookDelivery.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWebhookDelivery.ReadWebhookId: string;
+begin
+  Result := GetString('webhook_id');
+end;
+
+function TWebhookDelivery.ReadEventId: string;
+begin
+  Result := GetString('event_id');
+end;
+
+function TWebhookDelivery.ReadEventType: string;
+begin
+  Result := GetString('event_type');
+end;
+
+function TWebhookDelivery.ReadStatus: string;
+begin
+  Result := GetString('status');
+end;
+
+function TWebhookDelivery.ReadCreatedAt: Int64;
+begin
+  Result := GetInt64('created_at');
+end;
+
+function TWebhookDelivery.ReadEventCreatedAt: Int64;
+begin
+  Result := GetInt64('event_created_at');
+end;
+
+function TWebhookDelivery.ReadDeadlineAt: Int64;
+begin
+  Result := GetInt64('deadline_at');
+end;
+
+function TWebhookDelivery.ReadNextAttemptAt: Int64;
+begin
+  Result := GetInt64('next_attempt_at');
+end;
+
+function TWebhookDelivery.ReadUpdatedAt: Int64;
+begin
+  Result := GetInt64('updated_at');
+end;
+
+function TWebhookDeliveryListResponse.ReadList: TArray<TWebhookDelivery>;
+var
+  Values: TJSONArray;
+  Index: Integer;
+begin
+  Result := nil;
+  Values := GetArray('list');
+  if Values = nil then Exit;
+  SetLength(Result, Values.Count);
+  try
+    for Index := 0 to Values.Count - 1 do
+      begin
+      if not (Values.Items[Index] is TJSONObject) then
+        raise EConvertError.Create('Expected a JSON object in list');
+      Result[Index] := TWebhookDelivery.Create(TJSONObject(Values.Items[Index]));
+    end;
+  except
+    for Index := 0 to Length(Result) - 1 do
+      Result[Index].Free;
+    raise;
+  end;
+end;
+
+function TWebhookDeliveryListResponse.ReadPage: TWebhookDeliveryPage;
+var
+  Value: TJSONObject;
+begin
+  Value := GetObject('page');
+  if Value = nil then
+    Result := nil
+  else
+    Result := TWebhookDeliveryPage.Create(Value);
+end;
+
+function TWebhookDeliveryListResponse.NextPage: TWebhookDeliveryListResponse;
+begin
+  Result := TWebhookDeliveryListResponse(inherited NextPage);
+end;
+
+function TWebhookDeliveryListResponse.PreviousPage: TWebhookDeliveryListResponse;
+begin
+  Result := TWebhookDeliveryListResponse(inherited PreviousPage);
+end;
+
+function TWebhookDeliveryPage.ReadPageSize: Int64;
+begin
+  Result := GetInt64('page_size');
+end;
+
+function TWebhookDeliveryPage.ReadHasNext: Boolean;
+begin
+  Result := GetBoolean('has_next');
+end;
+
+function TWebhookDeliveryPage.ReadHasPrevious: Boolean;
+begin
+  Result := GetBoolean('has_previous');
+end;
+
+function TWebhookDeliveryPage.ReadNextAfter: string;
+begin
+  Result := GetString('next_after');
+end;
+
+function TWebhookDeliveryPage.ReadPreviousBefore: string;
+begin
+  Result := GetString('previous_before');
+end;
+
+function TWebhookDeliveryResendAccepted.ReadDeliveryId: string;
+begin
+  Result := GetString('delivery_id');
+end;
+
+function TWebhookDeliveryResendAccepted.ReadEventId: string;
+begin
+  Result := GetString('event_id');
+end;
+
+function TWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWebhookEvent.ReadEventType: string;
+begin
+  Result := GetString('event_type');
+end;
+
+function TWebhookEvent.ReadCreatedAt: Int64;
+begin
+  Result := GetInt64('created_at');
+end;
+
+function TWebhookEvent.ReadResourceType: string;
+begin
+  Result := GetString('resource_type');
+end;
+
+function TWebhookEvent.ReadResourceId: string;
+begin
+  Result := GetString('resource_id');
+end;
+
+function TWebhookEventDetail.ReadPayload: string;
+begin
+  Result := GetString('payload');
+end;
+
+function TWebhookEventDetail.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWebhookEventDetail.ReadEventType: string;
+begin
+  Result := GetString('event_type');
+end;
+
+function TWebhookEventDetail.ReadCreatedAt: Int64;
+begin
+  Result := GetInt64('created_at');
+end;
+
+function TWebhookEventDetail.ReadResourceType: string;
+begin
+  Result := GetString('resource_type');
+end;
+
+function TWebhookEventDetail.ReadResourceId: string;
+begin
+  Result := GetString('resource_id');
+end;
+
+function TWebhookEventListResponse.ReadList: TArray<TWebhookEvent>;
+var
+  Values: TJSONArray;
+  Index: Integer;
+begin
+  Result := nil;
+  Values := GetArray('list');
+  if Values = nil then Exit;
+  SetLength(Result, Values.Count);
+  try
+    for Index := 0 to Values.Count - 1 do
+      begin
+      if not (Values.Items[Index] is TJSONObject) then
+        raise EConvertError.Create('Expected a JSON object in list');
+      Result[Index] := TWebhookEvent.Create(TJSONObject(Values.Items[Index]));
+    end;
+  except
+    for Index := 0 to Length(Result) - 1 do
+      Result[Index].Free;
+    raise;
+  end;
+end;
+
+function TWebhookEventListResponse.ReadPage: TWebhookDeliveryPage;
+var
+  Value: TJSONObject;
+begin
+  Value := GetObject('page');
+  if Value = nil then
+    Result := nil
+  else
+    Result := TWebhookDeliveryPage.Create(Value);
+end;
+
+function TWebhookEventListResponse.NextPage: TWebhookEventListResponse;
+begin
+  Result := TWebhookEventListResponse(inherited NextPage);
+end;
+
+function TWebhookEventListResponse.PreviousPage: TWebhookEventListResponse;
+begin
+  Result := TWebhookEventListResponse(inherited PreviousPage);
 end;
 
 function TWebhookEventType.ReadCode: string;
@@ -3761,6 +6102,31 @@ begin
   Result := GetString('delivery_id');
 end;
 
+function TWebhookTestWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWebhookTestWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TWebhookTestWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TWebhookTestWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TWebhookTestWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
 function TWithdrawal.ReadId: string;
 begin
   Result := GetString('id');
@@ -3839,6 +6205,56 @@ begin
   Result := GetInt64('canceled_at');
 end;
 
+function TWithdrawalAcceptedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWithdrawalAcceptedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TWithdrawalAcceptedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TWithdrawalAcceptedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TWithdrawalAcceptedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
+function TWithdrawalAutomaticSettingsChangedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWithdrawalAutomaticSettingsChangedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TWithdrawalAutomaticSettingsChangedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TWithdrawalAutomaticSettingsChangedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TWithdrawalAutomaticSettingsChangedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
+end;
+
 function TWithdrawalBankAccount.ReadBankCode: string;
 begin
   Result := GetString('bank_code');
@@ -3852,6 +6268,31 @@ end;
 function TWithdrawalBankAccount.ReadAccountNumberMasked: string;
 begin
   Result := GetString('account_number_masked');
+end;
+
+function TWithdrawalCompletedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWithdrawalCompletedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TWithdrawalCompletedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TWithdrawalCompletedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TWithdrawalCompletedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TWithdrawalDestination.ReadId: string;
@@ -3887,6 +6328,31 @@ end;
 function TWithdrawalDestination.ReadVerifiedAt: Int64;
 begin
   Result := GetInt64('verified_at');
+end;
+
+function TWithdrawalDestinationChangedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWithdrawalDestinationChangedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TWithdrawalDestinationChangedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TWithdrawalDestinationChangedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TWithdrawalDestinationChangedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TWithdrawalDestinationListPage.ReadPageSize: Int64;
@@ -3956,6 +6422,31 @@ end;
 function TWithdrawalDestinationListResponse.PreviousPage: TWithdrawalDestinationListResponse;
 begin
   Result := TWithdrawalDestinationListResponse(inherited PreviousPage);
+end;
+
+function TWithdrawalFailedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWithdrawalFailedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TWithdrawalFailedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TWithdrawalFailedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TWithdrawalFailedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TWithdrawalFailureReason.ReadCode: string;
@@ -4131,6 +6622,31 @@ end;
 function TWithdrawalPixDestination.ReadBankIspb: string;
 begin
   Result := GetString('bank_ispb');
+end;
+
+function TWithdrawalRequestedWebhookEvent.ReadId: string;
+begin
+  Result := GetString('id');
+end;
+
+function TWithdrawalRequestedWebhookEvent.ReadType: string;
+begin
+  Result := GetString('type');
+end;
+
+function TWithdrawalRequestedWebhookEvent.ReadCreatedAt: string;
+begin
+  Result := GetString('created_at');
+end;
+
+function TWithdrawalRequestedWebhookEvent.ReadEnvironment: string;
+begin
+  Result := GetString('environment');
+end;
+
+function TWithdrawalRequestedWebhookEvent.ReadData: TJSONObject;
+begin
+  Result := GetObject('data');
 end;
 
 function TWithdrawalSummary.ReadProcessingCount: Int64;
